@@ -1,291 +1,452 @@
 <!DOCTYPE html>
 <html lang="vi" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MedTerm AI Pro - Tiếng Anh Y Khoa Chuyên Ngành (Nhật Duy)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MedTerm AI - App Học Tiếng Anh Y Khoa Thông Minh (Nhật Duy)</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="dark-mode">
 
-  <!-- Header -->
-  <header>
-    <div class="header-container">
-      <a href="#" class="brand">
-        <div class="brand-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-        <div class="brand-info">
-          <div class="brand-title-wrap">
-            <span class="brand-title">MedTerm AI Pro</span>
-            <span class="brand-badge">v2.0 SRS</span>
-          </div>
-          <span class="author-credit"><i class="fa-solid fa-code"></i> Developed & Coded by <strong>Nhật Duy</strong></span>
-        </div>
-      </a>
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-staff-snake"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>MedTerm<span class="highlight">.AI</span></h2>
+                    <span class="badge">Tiếng Anh Y Khoa</span>
+                    <span class="author-credit"><i class="fa-solid fa-code"></i> Code by <strong>Nhật Duy</strong></span>
+                </div>
+            </div>
 
-      <nav class="nav-tabs desktop-nav">
-        <button class="nav-btn active" data-tab="tab-dashboard"><i class="fa-solid fa-chart-pie"></i> Trang chủ</button>
-        <button class="nav-btn" data-tab="tab-dictionary"><i class="fa-solid fa-magnifying-glass"></i> Tra cứu</button>
-        <button class="nav-btn" data-tab="tab-flashcards"><i class="fa-solid fa-layer-group"></i> Thẻ ANKI</button>
-        <button class="nav-btn" data-tab="tab-root-match"><i class="fa-solid fa-puzzle-piece"></i> Ghép Từ Gốc</button>
-        <button class="nav-btn" data-tab="tab-ai-dict"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Dictionary</button>
-      </nav>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-view="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Tổng quan & Tiến độ</span>
+                </button>
+                <button class="nav-item" data-view="srs-study">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>Học Anki SRS</span>
+                    <span class="counter-badge" id="due-count-badge">0</span>
+                </button>
+                <button class="nav-item" data-view="quiz">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Bài tập tương tác</span>
+                </button>
+                <button class="nav-item" data-view="builder">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <span>Ghép từ & Gốc từ</span>
+                </button>
+                <button class="nav-item" data-view="dictionary">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Tra cứu thuật ngữ</span>
+                </button>
+                <button class="nav-item" data-view="ai-assistant">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>AI Dictionary</span>
+                </button>
+            </nav>
 
-      <div class="header-actions">
-        <button class="btn-icon" id="btn-api-modal" title="Cấu hình AI Gemini">
-          <i class="fa-solid fa-key"></i>
-          <span class="api-status-dot" id="api-status-dot"></span>
+            <div class="sidebar-footer">
+                <div class="ai-status-card" id="ai-status-btn">
+                    <i class="fa-solid fa-key text-warning"></i>
+                    <div class="status-info">
+                        <span class="status-title">Cấu hình Gemini API</span>
+                        <span class="status-desc" id="api-key-status-text">Chưa lưu API Key</span>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="theme-toggle-btn" title="Chuyển chế độ Sáng/Tối">
+                    <i class="fa-solid fa-moon"></i>
+                    <span>Chế độ Tối</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="top-header">
+                <button class="menu-mobile-btn" id="mobile-menu-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="module-selector-wrapper">
+                    <i class="fa-solid fa-book-medical"></i>
+                    <select id="global-module-select" class="module-dropdown">
+                        <option value="all">📚 Tất cả 13 Chương Data (1,342 Từ)</option>
+                    </select>
+                </div>
+
+                <div class="header-actions">
+                    <div class="streak-pill" title="Chuỗi ngày học liên tục">
+                        <i class="fa-solid fa-fire"></i>
+                        <span id="streak-counter">1</span> ngày
+                    </div>
+                    <button class="btn-icon" id="open-settings-modal" title="Cài đặt API Key & Model">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- VIEW 1: DASHBOARD & PROGRESS -->
+            <section class="app-view active" id="view-dashboard">
+                <div class="welcome-banner">
+                    <div class="banner-content">
+                        <h1>Chào sinh viên y khoa! 👋</h1>
+                        <div class="author-badge"><i class="fa-solid fa-circle-check"></i> Độc quyền lập trình bởi <strong>Nhật Duy</strong></div>
+                        <p>Hệ thống ghi nhớ lặp lại ngắt quãng (Spaced Repetition) chuẩn ANKI sẵn sàng giúp bạn thuộc & làm chủ 1,342 thuật ngữ tiếng Anh chuyên ngành.</p>
+                        <div class="banner-actions">
+                            <button class="btn btn-primary" id="start-anki-btn">
+                                <i class="fa-solid fa-play"></i> Bắt đầu học ngay (<span id="banner-due-count">0</span> từ)
+                            </button>
+                            <button class="btn btn-secondary" id="go-quiz-btn">
+                                <i class="fa-solid fa-pen-to-square"></i> Làm bài tập Luyện tập
+                            </button>
+                        </div>
+                    </div>
+                    <div class="banner-graphic">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                </div>
+
+                <!-- Stats Overview Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span class="stat-value" id="stat-total-terms">1,342</span>
+                            <span class="stat-label">Tổng số thuật ngữ Data</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon bg-orange">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span class="stat-value" id="stat-due-today">0</span>
+                            <span class="stat-label">Từ cần ôn hôm nay</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span class="stat-value" id="stat-mastered">0</span>
+                            <span class="stat-label">Đã thuộc vững (Mastered)</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span class="stat-value" id="stat-accuracy">100%</span>
+                            <span class="stat-label">Tỷ lệ chính xác Quiz</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Progress & Modules Overview -->
+                <div class="section-title">
+                    <h3><i class="fa-solid fa-book-bookmark"></i> Tiến độ theo từng Hệ Cơ Quan / Chương</h3>
+                </div>
+                <div class="modules-progress-list" id="modules-progress-container">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </section>
+
+            <!-- VIEW 2: ANKI SRS FLASHCARD STUDY -->
+            <section class="app-view" id="view-srs-study">
+                <div class="study-header">
+                    <div>
+                        <h2><i class="fa-solid fa-brain text-accent"></i> Thẻ Ghi Nhớ ANKI Spaced Repetition</h2>
+                        <p class="text-muted">Cơ chế lặp lại ngắt quãng tối ưu hóa khả năng ghi nhớ dài hạn ban đêm & ban ngày</p>
+                    </div>
+                    <div class="srs-progress-pill">
+                        Thẻ còn lại: <strong id="anki-remaining-count">0</strong>
+                    </div>
+                </div>
+
+                <div class="flashcard-container">
+                    <div class="flashcard" id="main-flashcard">
+                        <div class="card-face card-front">
+                            <span class="card-module-badge" id="card-module-title">Chương...</span>
+                            <div class="card-term" id="card-term-text">Gastritis</div>
+                            <div class="card-phonetic" id="card-phonetic-text">/ga-strahy-tis/</div>
+                            <button class="btn-audio" id="card-speak-btn" title="Phát âm chuẩn">
+                                <i class="fa-solid fa-volume-high"></i> Nghe phát âm
+                            </button>
+                            <div class="card-hint">
+                                <i class="fa-solid fa-rotate"></i> Chạm để lật xem đáp án
+                            </div>
+                        </div>
+
+                        <div class="card-face card-back">
+                            <span class="card-module-badge" id="card-back-module-title">Chương...</span>
+                            <div class="card-meaning" id="card-meaning-text">Viêm dạ dày</div>
+                            <div class="card-breakdown" id="card-breakdown-text">
+                                <strong>Phân tích:</strong> gastr- (dạ dày) + -itis (viêm)
+                            </div>
+                            <div class="card-note" id="card-note-text">
+                                Ghi chú lâm sàng
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANKI Rating Action Buttons -->
+                <div class="srs-rating-bar hidden" id="srs-actions">
+                    <button class="srs-btn btn-again" data-rating="again">
+                        <span class="srs-time">&lt; 1 phút</span>
+                        <span class="srs-label">Lặp lại</span>
+                    </button>
+                    <button class="srs-btn btn-hard" data-rating="hard">
+                        <span class="srs-time">1 ngày</span>
+                        <span class="srs-label">Khó</span>
+                    </button>
+                    <button class="srs-btn btn-good" data-rating="good">
+                        <span class="srs-time">3 ngày</span>
+                        <span class="srs-label">Tốt</span>
+                    </button>
+                    <button class="srs-btn btn-easy" data-rating="easy">
+                        <span class="srs-time">6 ngày</span>
+                        <span class="srs-label">Rất dễ</span>
+                    </button>
+                </div>
+                <div class="flip-prompt" id="flip-prompt-btn">
+                    <button class="btn btn-primary btn-lg" id="card-flip-trigger">
+                        <i class="fa-solid fa-eye"></i> Hiện đáp án & Phân tích
+                    </button>
+                </div>
+            </section>
+
+            <!-- VIEW 3: INTERACTIVE QUIZ -->
+            <section class="app-view" id="view-quiz">
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <div class="quiz-info">
+                            <h2><i class="fa-solid fa-list-check"></i> Bài tập Trắc nghiệm Tương tác</h2>
+                            <span class="text-muted">Luyện tập phản xạ thuật ngữ & định nghĩa y khoa</span>
+                        </div>
+                        <div class="quiz-score-badge">
+                            Điểm: <span id="quiz-score">0</span> / <span id="quiz-total-asked">0</span>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card" id="quiz-card-box">
+                        <div class="quiz-question-type" id="quiz-type-label">Trắc nghiệm Thuật ngữ</div>
+                        <div class="quiz-question" id="quiz-question-text">
+                            Đang tải câu hỏi...
+                        </div>
+                        <div class="quiz-subtext" id="quiz-subtext"></div>
+
+                        <div class="quiz-options-grid" id="quiz-options-container">
+                            <!-- Rendered by JS -->
+                        </div>
+
+                        <div class="quiz-explanation hidden" id="quiz-explanation-box">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span id="quiz-explanation-text"></span>
+                        </div>
+
+                        <div class="quiz-footer">
+                            <button class="btn btn-primary hidden" id="quiz-next-btn">
+                                Câu tiếp theo <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 4: TERM BUILDER & ROOT MATCHING -->
+            <section class="app-view" id="view-builder">
+                <div class="builder-container">
+                    <div class="section-title">
+                        <h2><i class="fa-solid fa-puzzle-piece"></i> Thử thách Ghép cấu tạo từ Y khoa</h2>
+                        <p class="text-muted">Ghép Tiền tố (Prefix) + Gốc từ (Root) + Hậu tố (Suffix) để tạo thành thuật ngữ chính xác</p>
+                    </div>
+
+                    <div class="builder-card">
+                        <div class="builder-target">
+                            <span class="target-label">Ý nghĩa Y học mục tiêu:</span>
+                            <h3 id="builder-meaning-target">Viêm dạ dày</h3>
+                        </div>
+
+                        <div class="word-slots">
+                            <div class="slot" id="slot-prefix" data-type="prefix">Tiền tố (Prefix)</div>
+                            <span class="plus">+</span>
+                            <div class="slot" id="slot-root" data-type="root">Gốc từ (Root)</div>
+                            <span class="plus">+</span>
+                            <div class="slot" id="slot-suffix" data-type="suffix">Hậu tố (Suffix)</div>
+                        </div>
+
+                        <div class="builder-result-preview" id="builder-result-preview">
+                            Kết quả ghép: <strong id="assembled-term">—</strong>
+                        </div>
+
+                        <div class="components-palette">
+                            <h4>Chọn các thành phần:</h4>
+                            <div class="chips-group" id="palette-chips">
+                                <!-- Rendered dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="builder-actions">
+                            <button class="btn btn-secondary" id="builder-reset-btn">
+                                <i class="fa-solid fa-rotate-left"></i> Làm lại
+                            </button>
+                            <button class="btn btn-primary" id="builder-check-btn">
+                                <i class="fa-solid fa-circle-check"></i> Kiểm tra đáp án
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 5: DICTIONARY & SEARCH -->
+            <section class="app-view" id="view-dictionary">
+                <div class="dictionary-container">
+                    <div class="dictionary-search-bar">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="dict-search-input" placeholder="Nhập thuật ngữ (female reproductive system, gastr-, -itis, viêm gan, heart, pulmon...)...">
+                        <button class="btn-clear" id="dict-clear-btn"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+
+                    <div class="dictionary-results-info">
+                        Tìm thấy <strong id="dict-results-count">0</strong> thuật ngữ
+                    </div>
+
+                    <div class="dictionary-list" id="dict-list-container">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 6: AI DICTIONARY & GEMINI ASSISTANT (MATCHES SCREENSHOT FORMAT) -->
+            <section class="app-view" id="view-ai-assistant">
+                <div class="ai-chat-container">
+                    <div class="ai-dict-header">
+                        <h2><span class="brand-blue">AI</span> Dictionary</h2>
+                        <p class="text-muted">Tra cứu thông minh các thuật ngữ y khoa chuyên ngành được hỗ trợ bởi AI.</p>
+                    </div>
+
+                    <div class="ai-search-input-box">
+                        <input type="text" id="ai-search-input" placeholder="female reproductive system" value="female reproductive system">
+                        <button class="btn btn-primary" id="ai-search-btn">Tra cứu</button>
+                    </div>
+
+                    <div id="ai-dict-response" class="ai-response-card">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Mobile Navigation Bottom Bar -->
+    <div class="mobile-nav-bar">
+        <button class="mobile-nav-item active" data-view="dashboard">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Tổng quan</span>
         </button>
-        <button class="btn-icon" id="theme-toggle" title="Đổi giao diện Tối/Sáng"><i class="fa-solid fa-moon"></i></button>
-      </div>
+        <button class="mobile-nav-item" data-view="srs-study">
+            <i class="fa-solid fa-brain"></i>
+            <span>Thẻ ANKI</span>
+        </button>
+        <button class="mobile-nav-item" data-view="quiz">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Bài tập</span>
+        </button>
+        <button class="mobile-nav-item" data-view="builder">
+            <i class="fa-solid fa-puzzle-piece"></i>
+            <span>Ghép từ</span>
+        </button>
+        <button class="mobile-nav-item" data-view="dictionary">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Tra cứu</span>
+        </button>
+        <button class="mobile-nav-item" data-view="ai-assistant">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>AI Dict</span>
+        </button>
     </div>
-  </header>
 
-  <!-- Main Content Layout -->
-  <main class="app-main">
-
-    <!-- TAB 1: DASHBOARD & PROGRESS -->
-    <section id="tab-dashboard" class="tab-content active">
-      <div class="hero-banner">
-        <div class="hero-left">
-          <span class="hero-tag"><i class="fa-solid fa-user-doctor"></i> Tiếng Anh Y Khoa Chuyên Ngành</span>
-          <h2>Hệ Thống Học & Ghi Nhớ Thuật Ngữ Y Khoa</h2>
-          <p>Sử dụng phương pháp lặp lại ngắt quãng (SRS/Anki), phân tích Căn tố La-tinh/Hy Lạp, trò chơi ghép từ tương tác và AI Gemini Pro.</p>
-          <div class="hero-author-badge">
-            <i class="fa-solid fa-circle-check"></i> Ứng dụng được thiết kế & lập trình độc quyền bởi <strong>Nhật Duy</strong>
-          </div>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p><b>MedTerm AI Pro</b> — Nền tảng Học Tiếng Anh Y Khoa Chuyên Ngành Thông Minh</p>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">Lập trình & Phát triển bởi <strong>Nhật Duy</strong> | Tích hợp 1,342 Thuật ngữ Y khoa</p>
         </div>
-      </div>
+    </footer>
 
-      <div class="dashboard-grid">
-        <div class="stat-card blue">
-          <div class="stat-icon"><i class="fa-solid fa-book-medical"></i></div>
-          <div class="stat-info">
-            <h4>Tổng số thuật ngữ</h4>
-            <div class="value" id="stat-total">1,342</div>
-          </div>
+    <!-- SETTINGS & GEMINI API KEY MODAL -->
+    <div class="modal-overlay hidden" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-key text-warning"></i> Cấu hình Gemini AI API Key</h3>
+                <button class="modal-close-btn" id="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Để sử dụng Trợ lý AI giải thích chuyên sâu thuật ngữ y khoa, bạn vui lòng dán Gemini API Key của bạn vào ô bên dưới:</p>
+                
+                <div class="form-group">
+                    <label for="gemini-api-key-input">Gemini API Key:</label>
+                    <div class="input-paste-group">
+                        <input type="password" id="gemini-api-key-input" placeholder="AIzaSy..." autocomplete="off">
+                        <button class="btn btn-secondary" id="paste-key-btn" title="Dán từ Clipboard (Ctrl+V)">
+                            <i class="fa-solid fa-paste"></i> Dán (Ctrl+V)
+                        </button>
+                    </div>
+                    <small class="text-muted">API Key sẽ được lưu an toàn trong trình duyệt (localStorage) để bạn không cần dán lại lần sau.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="gemini-model-input"><i class="fa-solid fa-microchip"></i> Tên Model Gemini (Tự chọn / Điền tên):</label>
+                    <input type="text" id="gemini-model-input" list="model-suggestions" class="form-control" placeholder="gemini-2.5-flash" value="gemini-2.5-flash" style="width:100%; padding:10px 14px; background:var(--bg-primary); border:1px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-primary); margin-top:4px; font-size:0.95rem;">
+                    <datalist id="model-suggestions">
+                        <option value="gemini-2.5-flash">
+                        <option value="gemini-1.5-flash">
+                        <option value="gemini-2.0-flash">
+                        <option value="gemini-1.5-pro">
+                        <option value="gemini-flash">
+                    </datalist>
+                    <small class="text-muted" style="display:block; margin-top:4px;">Bạn có thể gõ bất kỳ tên Model nào (ví dụ: gemini-2.5-flash, gemini-flash...).</small>
+                </div>
+
+                <div class="api-key-actions">
+                    <button class="btn btn-danger btn-sm" id="clear-key-btn">
+                        <i class="fa-solid fa-trash"></i> Xóa API Key đã lưu
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-settings-btn">Hủy</button>
+                <button class="btn btn-primary" id="save-api-key-btn">
+                    <i class="fa-solid fa-floppy-disk"></i> Lưu Cấu Hình
+                </button>
+            </div>
         </div>
-
-        <div class="stat-card emerald">
-          <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
-          <div class="stat-info">
-            <h4>Đã thuộc vững (Mastered)</h4>
-            <div class="value" id="stat-mastered">0</div>
-          </div>
-        </div>
-
-        <div class="stat-card amber">
-          <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-          <div class="stat-info">
-            <h4>Đang học (Learning)</h4>
-            <div class="value" id="stat-learning">0</div>
-          </div>
-        </div>
-
-        <div class="stat-card purple">
-          <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
-          <div class="stat-info">
-            <h4>Chuỗi ngày học</h4>
-            <div class="value" id="stat-streak">1 Ngày</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="module-selector-section">
-        <div class="section-title">
-          <h3><i class="fa-solid fa-folder-open"></i> Danh mục Bài học theo Hệ cơ quan & Chuyên đề</h3>
-          <small>Chọn hệ thống cơ quan để tra cứu và luyện tập chuyên sâu</small>
-        </div>
-        <div class="module-grid" id="module-grid">
-          <!-- Modules rendered via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 2: TRA CỨU THUẬT NGỮ -->
-    <section id="tab-dictionary" class="tab-content">
-      <div class="dictionary-container">
-        <div class="search-box-wrapper">
-          <i class="fa-solid fa-search search-icon"></i>
-          <input type="text" class="search-input" id="dict-search-input" placeholder="Tra cứu thuật ngữ tiếng Anh, tiếng Việt, tiền tố, hậu tố (ví dụ: hyperthyroidism, gastr-, viêm phổi)...">
-          <button id="btn-clear-search" class="btn-clear"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-
-        <div class="search-filter-bar">
-          <select id="dict-module-filter" class="custom-select">
-            <option value="all">-- Tất cả hệ cơ quan & chuyên đề --</option>
-          </select>
-          <span class="search-result-count">Tìm thấy <strong id="search-count">0</strong> thuật ngữ</span>
-        </div>
-
-        <div class="dict-list" id="dict-list">
-          <!-- Terms rendered via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 3: ANKI SRS FLASHCARDS -->
-    <section id="tab-flashcards" class="tab-content">
-      <div class="srs-container">
-        <div class="srs-top-bar">
-          <div class="srs-title"><i class="fa-solid fa-brain"></i> Thẻ Thẻ ANKI (Lặp lại ngắt quãng - SM-2)</div>
-          <select id="srs-module-select" class="custom-select">
-            <option value="all">Tất cả bài học</option>
-          </select>
-        </div>
-
-        <div class="flashcard-wrapper" id="flashcard-wrapper">
-          <!-- Card rendered dynamically -->
-        </div>
-
-        <div class="srs-controls">
-          <button class="rate-btn rate-again" id="rate-again" onclick="rateCard(1)">
-            <span class="label">🔴 Quên (Again)</span>
-            <span class="sub">&lt; 1 phút</span>
-          </button>
-          <button class="rate-btn rate-hard" id="rate-hard" onclick="rateCard(2)">
-            <span class="label">🟠 Khó (Hard)</span>
-            <span class="sub">1 ngày</span>
-          </button>
-          <button class="rate-btn rate-good" id="rate-good" onclick="rateCard(3)">
-            <span class="label">🔵 Tốt (Good)</span>
-            <span class="sub">3 ngày</span>
-          </button>
-          <button class="rate-btn rate-easy" id="rate-easy" onclick="rateCard(4)">
-            <span class="label">🟢 Dễ (Easy)</span>
-            <span class="sub">6 ngày</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 4: GHÉP TỪ GỐC VÀ BÀI TẬP (INSANELY BEAUTIFUL ROOT MATCHING UI) -->
-    <section id="tab-root-match" class="tab-content">
-      <div class="assembly-wrapper">
-        <div class="assembly-header">
-          <h2><i class="fa-solid fa-puzzle-piece"></i> Đấu Trường Ghép Căn Tố Y Khoa</h2>
-          <p>Phân tách và ghép nối <strong>[Tiền tố] + [Gốc từ] + [Hậu tố]</strong> để tạo thành thuật ngữ Y khoa hoàn chỉnh.</p>
-        </div>
-
-        <div class="game-score-bar">
-          <div class="score-badge"><i class="fa-solid fa-star"></i> Điểm: <strong id="game-score">0</strong></div>
-          <div class="score-badge"><i class="fa-solid fa-fire"></i> Chuỗi: <strong id="game-combo">0</strong></div>
-          <button class="btn-refresh-game" onclick="startRootMatchGame()"><i class="fa-solid fa-rotate-right"></i> Đổi câu hỏi</button>
-        </div>
-
-        <div class="assembly-stage-card" id="assembly-stage">
-          <!-- Assembly Game Rendered via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 5: AI DICTIONARY (MATCHES ATTACHED SCREENSHOT) -->
-    <section id="tab-ai-dict" class="tab-content">
-      <div class="ai-dict-container">
-        <div class="ai-dict-header">
-          <h2><span class="brand-blue">AI</span> Dictionary</h2>
-          <p>Tra cứu thông minh các thuật ngữ y khoa chuyên ngành được hỗ trợ bởi AI.</p>
-        </div>
-
-        <div class="ai-search-bar">
-          <input type="text" id="ai-search-input" placeholder="female reproductive system" value="female reproductive system">
-          <button id="btn-ai-search" class="btn-primary-ai">Tra cứu</button>
-        </div>
-
-        <div id="ai-dict-response" class="ai-response-card">
-          <!-- AI Response Output -->
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Mobile Bottom Navigation Bar -->
-  <nav class="mobile-nav">
-    <button class="mobile-nav-btn active" data-tab="tab-dashboard">
-      <i class="fa-solid fa-house"></i><span>Trang chủ</span>
-    </button>
-    <button class="mobile-nav-btn" data-tab="tab-dictionary">
-      <i class="fa-solid fa-magnifying-glass"></i><span>Tra cứu</span>
-    </button>
-    <button class="mobile-nav-btn" data-tab="tab-flashcards">
-      <i class="fa-solid fa-layer-group"></i><span>Anki</span>
-    </button>
-    <button class="mobile-nav-btn" data-tab="tab-root-match">
-      <i class="fa-solid fa-puzzle-piece"></i><span>Ghép từ</span>
-    </button>
-    <button class="mobile-nav-btn" data-tab="tab-ai-dict">
-      <i class="fa-solid fa-wand-magic-sparkles"></i><span>AI Dict</span>
-    </button>
-  </nav>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-container">
-      <p><b>MedTerm AI Pro</b> — Nền tảng Học Tiếng Anh Y Khoa Chuyên Ngành Thông Minh</p>
-      <p style="font-size:0.85rem; color:var(--text-muted);">Được lập trình & phát triển bởi <strong>Nhật Duy</strong> | Tích hợp 1,342 thuật ngữ Y khoa</p>
     </div>
-  </footer>
 
-  <!-- Modal API Config -->
-  <div id="modal-api-config" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><i class="fa-solid fa-robot"></i> Cài Đặt AI Gemini API</h3>
-        <button class="btn-close-modal" id="btn-close-api-modal"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:1rem;">
-          Dán API Key từ Google AI Studio và điền/chọn Tên Model Gemini bạn muốn dùng.
-        </p>
-
-        <div class="form-group">
-          <label for="input-api-key"><i class="fa-solid fa-key"></i> Gemini API Key:</label>
-          <div class="input-with-paste">
-            <input type="password" id="input-api-key" placeholder="AIzaSy...">
-            <button id="btn-toggle-key-vis" class="btn-sub"><i class="fa-solid fa-eye"></i></button>
-            <button id="btn-paste-api-key" class="btn-sub"><i class="fa-solid fa-paste"></i> Dán</button>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="input-model-name"><i class="fa-solid fa-microchip"></i> Tên Model Gemini (Tự điền/Chọn):</label>
-          <input type="text" id="input-model-name" list="model-suggestions" placeholder="gemini-2.5-flash" value="gemini-2.5-flash">
-          <datalist id="model-suggestions">
-            <option value="gemini-2.5-flash">gemini-2.5-flash (Khuyên dùng - Nhanh & Chính xác)</option>
-            <option value="gemini-1.5-flash">gemini-1.5-flash</option>
-            <option value="gemini-2.0-flash">gemini-2.0-flash</option>
-            <option value="gemini-1.5-pro">gemini-1.5-pro</option>
-            <option value="gemini-flash">gemini-flash</option>
-          </datalist>
-          <small style="color:var(--text-muted); font-size:0.8rem; display:block; margin-top:4px;">Bạn có thể gõ bất kỳ tên Model nào (ví dụ: gemini-2.5-flash, gemini-flash...).</small>
-        </div>
-
-        <div class="modal-footer-actions">
-          <button id="btn-save-api-key" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Lưu Cấu Hình</button>
-          <button id="btn-clear-api-key" class="btn-secondary"><i class="fa-solid fa-eraser"></i> Xóa Key</button>
-        </div>
-
-        <div id="api-key-msg" class="api-msg-box"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Term Detail -->
-  <div id="modal-term-detail" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 id="m-term-title">Medical Term</h3>
-        <button class="btn-close-modal" id="btn-close-term-modal"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body" id="m-term-body"></div>
-    </div>
-  </div>
-
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
