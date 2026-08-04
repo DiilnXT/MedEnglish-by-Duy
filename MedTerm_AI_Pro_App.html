@@ -1,3 +1,1552 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MedTerm AI Pro - Tiếng Anh Y Khoa (Nhật Duy)</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+/* Reset & Base Variables */
+:root {
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-hover: #334155;
+  --bg-input: #0f172a;
+  --border-color: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-cyan: #38bdf8;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* App Container */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 90px 16px;
+}
+
+/* Header */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.brand-text h1 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-ai {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: #0f172a;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.author-credit {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.author-credit strong {
+  color: var(--accent-cyan);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-cyan);
+}
+
+.api-status-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-rose);
+}
+
+.api-status-dot.active {
+  background-color: var(--accent-emerald);
+  box-shadow: 0 0 8px var(--accent-emerald);
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  display: flex;
+  gap: 8px;
+  background: var(--bg-card);
+  padding: 6px;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.nav-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-btn.active {
+  background: linear-gradient(135deg, var(--accent-blue), #2563eb);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Mobile Bottom Navigation */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-color);
+  padding: 8px 12px;
+  justify-content: space-around;
+  z-index: 1000;
+}
+
+.mobile-nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.mobile-nav-btn i {
+  font-size: 18px;
+}
+
+.mobile-nav-btn.active {
+  color: var(--accent-cyan);
+}
+
+/* Content Pages */
+.tab-page {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero Section */
+.hero-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--accent-cyan);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.hero-content h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  max-width: 700px;
+  margin-bottom: 20px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Modules Grid */
+.section-title {
+  margin-bottom: 16px;
+}
+
+.section-title h3 {
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sub-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.module-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.module-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.module-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.module-info {
+  flex: 1;
+}
+
+.module-info h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.module-count {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Search Tab */
+.search-header-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+}
+
+.search-header-box h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.search-input-wrapper input {
+  width: 100%;
+  padding: 12px 40px 12px 40px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.search-input-wrapper input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.btn-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  display: none;
+}
+
+.custom-select {
+  padding: 12px 16px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-results-info {
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.terms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.term-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.term-card:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.term-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.term-word {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.term-phonetic {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+}
+
+.term-meaning {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-emerald);
+  margin-bottom: 10px;
+}
+
+.term-note {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.term-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 10px;
+}
+
+.term-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.btn-speak {
+  background: transparent;
+  border: none;
+  color: var(--accent-cyan);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.btn-speak:hover {
+  color: var(--accent-blue);
+}
+
+/* SRS / Anki Flashcards */
+.srs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.srs-card-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.flashcard-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  min-height: 320px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.4s ease;
+  perspective: 1000px;
+  box-shadow: var(--shadow-lg);
+}
+
+.flashcard-box.flipped {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border-color: var(--accent-purple);
+}
+
+.card-hint {
+  position: absolute;
+  bottom: 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.srs-buttons-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-srs {
+  padding: 12px 6px;
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.btn-srs span.sub {
+  font-size: 10px;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.btn-again { background: #e11d48; }
+.btn-hard { background: #d97706; }
+.btn-good { background: #059669; }
+.btn-easy { background: #2563eb; }
+
+.btn-srs:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* Quiz Section */
+.quiz-header {
+  margin-bottom: 24px;
+}
+
+.quiz-mode-selector {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.quiz-mode-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quiz-mode-btn.active {
+  background: var(--accent-blue);
+  color: #fff;
+  border-color: var(--accent-blue);
+}
+
+.quiz-card-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.quiz-question-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quiz-opt-btn {
+  padding: 14px 18px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quiz-opt-btn:hover {
+  border-color: var(--accent-cyan);
+  background: var(--bg-card-hover);
+}
+
+.quiz-opt-btn.correct {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--accent-emerald);
+  color: var(--accent-emerald);
+}
+
+.quiz-opt-btn.wrong {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: var(--accent-rose);
+  color: var(--accent-rose);
+}
+
+/* AI DICTIONARY SECTION - MATCHING ATTACHED IMAGE EXACTLY */
+.ai-dict-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ai-dict-header {
+  margin-bottom: 20px;
+}
+
+.ai-dict-header h2 {
+  font-size: 28px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-blue {
+  color: var(--accent-blue);
+}
+
+.ai-dict-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.ai-search-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.ai-search-bar input {
+  flex: 1;
+  padding: 14px 18px;
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.ai-search-bar input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.btn-primary-ai {
+  padding: 0 28px;
+  background: #1d4ed8;
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary-ai:hover {
+  background: #2563eb;
+}
+
+/* AI Response Box - Matching attached image style */
+.ai-response-card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  line-height: 1.7;
+}
+
+.ai-welcome-box {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.ai-sparkle-icon {
+  font-size: 40px;
+  color: var(--accent-cyan);
+  margin-bottom: 16px;
+}
+
+.preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.chip {
+  background: #1f2937;
+  border: 1px solid #374151;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.chip:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+/* AI Structured Result Card Formatting */
+.ai-result-content {
+  color: #e5e7eb;
+  font-size: 14.5px;
+}
+
+.ai-result-header {
+  border-bottom: 1px solid #1f2937;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.ai-greeting {
+  color: #9ca3af;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.ai-term-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.ai-phonetic {
+  font-family: var(--font-mono);
+  color: #38bdf8;
+  font-size: 14px;
+}
+
+.ai-section {
+  margin-bottom: 22px;
+}
+
+.ai-section-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-section-content {
+  color: #d1d5db;
+  padding-left: 4px;
+}
+
+.ai-section-content p {
+  margin-bottom: 8px;
+}
+
+.ai-root-item {
+  background: #1f2937;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  border-left: 3px solid var(--accent-blue);
+}
+
+.ai-root-name {
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.ai-footer-note {
+  border-top: 1px solid #1f2937;
+  padding-top: 16px;
+  margin-top: 24px;
+  font-style: italic;
+  color: #9ca3af;
+  font-size: 13.5px;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.input-with-paste {
+  display: flex;
+  gap: 8px;
+}
+
+.input-with-paste input,
+.model-select-wrapper input {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  width: 100%;
+}
+
+.btn-sub {
+  padding: 10px 14px;
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.btn-sub:hover {
+  background: var(--border-color);
+}
+
+.field-hint {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.modal-footer-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 12px;
+  background: var(--accent-blue);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  padding: 12px 18px;
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.api-msg-box {
+  margin-top: 14px;
+  font-size: 13px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  display: none;
+}
+
+.api-msg-box.success {
+  display: block;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-emerald);
+  border: 1px solid var(--accent-emerald);
+}
+
+.api-msg-box.error {
+  display: block;
+  background: rgba(244, 63, 94, 0.15);
+  color: var(--accent-rose);
+  border: 1px solid var(--accent-rose);
+}
+
+/* Progress Section */
+.progress-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.p-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.p-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.border-blue .p-icon { color: var(--accent-blue); }
+.border-green .p-icon { color: var(--accent-emerald); }
+.border-purple .p-icon { color: var(--accent-purple); }
+.border-amber .p-icon { color: var(--accent-amber); }
+
+.p-val {
+  font-size: 20px;
+  font-weight: 800;
+  display: block;
+}
+
+.p-lbl {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.module-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.m-prog-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.m-prog-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.progress-bar-bg {
+  height: 8px;
+  background: var(--bg-dark);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.danger-zone {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.btn-danger {
+  padding: 10px 20px;
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid var(--accent-rose);
+  color: var(--accent-rose);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-danger:hover {
+  background: var(--accent-rose);
+  color: #fff;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+  
+  .mobile-nav {
+    display: flex;
+  }
+
+  .app-container {
+    padding-bottom: 90px;
+  }
+
+  .hero-card {
+    padding: 20px;
+  }
+
+  .hero-content h2 {
+    font-size: 20px;
+  }
+
+  .ai-search-bar {
+    flex-direction: column;
+  }
+
+  .btn-primary-ai {
+    padding: 14px;
+  }
+
+  .srs-buttons-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+</style>
+</head>
+<body class="dark-mode">
+
+  <!-- Main Container -->
+  <div id="app" class="app-container">
+
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="header-brand">
+        <div class="logo-icon">
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+        <div class="brand-text">
+          <h1>MedTerm <span class="badge-ai">AI Pro</span></h1>
+          <p class="author-credit"><i class="fa-solid fa-code"></i> Developed by <strong>Nhật Duy</strong></p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-api-config" class="btn-icon" title="Cấu hình AI Gemini">
+          <i class="fa-solid fa-key"></i>
+          <span class="api-status-dot" id="api-status-dot"></span>
+        </button>
+        <button id="btn-theme-toggle" class="btn-icon" title="Chuyển chế độ giao diện">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Navigation Bar (Desktop & Tablet) -->
+    <nav class="main-nav desktop-nav">
+      <button class="nav-btn active" data-tab="tab-home">
+        <i class="fa-solid fa-house"></i> <span>Trang chủ</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-search">
+        <i class="fa-solid fa-book-medical"></i> <span>Tra cứu</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-srs">
+        <i class="fa-solid fa-layer-group"></i> <span>Học SRS (Anki)</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-quiz">
+        <i class="fa-solid fa-gamepad"></i> <span>Bài tập</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-ai-dict">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Dictionary</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-progress">
+        <i class="fa-solid fa-chart-line"></i> <span>Tiến độ</span>
+      </button>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="content-area">
+
+      <!-- TAB 1: TRANG CHỦ -->
+      <section id="tab-home" class="tab-page active">
+        <div class="hero-card">
+          <div class="hero-content">
+            <span class="hero-tag"><i class="fa-solid fa-graduation-cap"></i> Chuyên ngành Y khoa</span>
+            <h2>Hệ thống Học Tiếng Anh Y Khoa Thông Minh</h2>
+            <p>Ứng dụng phương pháp lặp lại ngắt quãng (SRS/Anki), bài tập tương tác, chuẩn phát âm Respelling và Trí tuệ Nhân tạo Gemini Flash.</p>
+            <div class="hero-stats">
+              <div class="stat-box">
+                <span class="stat-number" id="stat-total-terms">1,342</span>
+                <span class="stat-label">Thuật ngữ Y khoa</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-number" id="stat-mastered">0</span>
+                <span class="stat-label">Đã thuộc</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-number" id="stat-streak">0 ngày</span>
+                <span class="stat-label">Chuỗi học tập</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">
+          <h3><i class="fa-solid fa-book-open"></i> Danh mục Bài học theo Hệ cơ quan</h3>
+          <span class="sub-text">13 Chuyên đề & Hệ thống cơ quan đầy đủ</span>
+        </div>
+
+        <div class="modules-grid" id="modules-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 2: TRA CỨU THUẬT NGỮ -->
+      <section id="tab-search" class="tab-page">
+        <div class="search-header-box">
+          <h2><i class="fa-solid fa-magnifying-glass"></i> Tra Cứu Thuật Ngữ Y Khoa</h2>
+          <p>Tìm kiếm tức thì trong kho 1,340+ dữ liệu thuật ngữ, gốc từ, tiền tố, hậu tố và hệ cơ quan.</p>
+          
+          <div class="search-controls">
+            <div class="search-input-wrapper">
+              <i class="fa-solid fa-search search-icon"></i>
+              <input type="text" id="term-search-input" placeholder="Nhập thuật ngữ tiếng Anh, nghĩa tiếng Việt, gốc từ (như gastr-, cardiac)...">
+              <button id="btn-clear-search" class="btn-clear"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <select id="filter-module-select" class="custom-select">
+              <option value="all">-- Tất cả hệ cơ quan & chuyên đề --</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="search-results-info">
+          <span>Tìm thấy <strong id="search-count">0</strong> thuật ngữ</span>
+        </div>
+
+        <div class="terms-grid" id="terms-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 3: HỌC SRS / ANKI -->
+      <section id="tab-srs" class="tab-page">
+        <div class="srs-header">
+          <div class="srs-title">
+            <h2><i class="fa-solid fa-brain"></i> Ghi Nhớ Ngắt Quãng (Anki / SRS)</h2>
+            <p>Cơ chế lặp lại ngắt quãng thông minh giúp khắc sâu kiến thức vào trí nhớ dài hạn.</p>
+          </div>
+          <div class="srs-filter">
+            <select id="srs-module-filter" class="custom-select">
+              <option value="all">Tất cả bài học</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="srs-card-container" class="srs-card-wrapper">
+          <!-- Card Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 4: BÀI TẬP TƯƠNG TÁC -->
+      <section id="tab-quiz" class="tab-page">
+        <div class="quiz-header">
+          <h2><i class="fa-solid fa-gamepad"></i> Bài Tập Tương Tác</h2>
+          <p>Luyện tập trắc nghiệm chọn nghĩa, ghép gốc từ và kiểm tra khả năng phản xạ thuật ngữ.</p>
+          
+          <div class="quiz-mode-selector">
+            <button class="quiz-mode-btn active" data-mode="en_vi">Anh &rarr; Việt</button>
+            <button class="quiz-mode-btn" data-mode="vi_en">Việt &rarr; Anh</button>
+            <button class="quiz-mode-btn" data-mode="root_match">Ghép Gốc từ</button>
+          </div>
+        </div>
+
+        <div id="quiz-container" class="quiz-card-box">
+          <!-- Quiz Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 5: AI DICTIONARY (EXACT MATCH FOR ATTACHED IMAGE) -->
+      <section id="tab-ai-dict" class="tab-page">
+        <div class="ai-dict-container">
+          <div class="ai-dict-header">
+            <h2><span class="brand-blue">AI</span> Dictionary</h2>
+            <p>Tra cứu thông minh các thuật ngữ y khoa chuyên ngành được hỗ trợ bởi AI.</p>
+          </div>
+
+          <div class="ai-search-bar">
+            <input type="text" id="ai-search-input" placeholder="female reproductive system" value="female reproductive system">
+            <button id="btn-ai-search" class="btn-primary-ai">Tra cứu</button>
+          </div>
+
+          <div id="ai-dict-response" class="ai-response-card">
+            <!-- AI Output or Placeholder -->
+            <div class="ai-welcome-box">
+              <i class="fa-solid fa-sparkles ai-sparkle-icon"></i>
+              <p>Nhập bất kỳ thuật ngữ Y khoa nào để AI phân tích cấu trúc La-tinh/Hy Lạp, phiên âm, ví dụ lâm sàng và giải thích chi tiết.</p>
+              <div class="preset-chips">
+                <span class="chip" onclick="quickAiSearch('female reproductive system')">female reproductive system</span>
+                <span class="chip" onclick="quickAiSearch('myocardial infarction')">myocardial infarction</span>
+                <span class="chip" onclick="quickAiSearch('hyperthyroidism')">hyperthyroidism</span>
+                <span class="chip" onclick="quickAiSearch('colposcopy')">colposcopy</span>
+                <span class="chip" onclick="quickAiSearch('gastroenteritis')">gastroenteritis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: TIẾN ĐỘ -->
+      <section id="tab-progress" class="tab-page">
+        <div class="progress-header">
+          <h2><i class="fa-solid fa-chart-pie"></i> Theo Dõi Tiến Độ Chi Tiết</h2>
+          <p>Thống kê số dư thuật ngữ, mức độ thành thạo và tỷ lệ hoàn thành theo từng hệ thống.</p>
+        </div>
+
+        <div class="progress-summary-cards">
+          <div class="p-card border-blue">
+            <div class="p-icon"><i class="fa-solid fa-book"></i></div>
+            <div class="p-info">
+              <span class="p-val" id="p-total">1,342</span>
+              <span class="p-lbl">Tổng thuật ngữ</span>
+            </div>
+          </div>
+          <div class="p-card border-green">
+            <div class="p-icon"><i class="fa-solid fa-check-double"></i></div>
+            <div class="p-info">
+              <span class="p-val" id="p-mastered">0</span>
+              <span class="p-lbl">Đã thành thạo (SRS 4+)</span>
+            </div>
+          </div>
+          <div class="p-card border-purple">
+            <div class="p-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="p-info">
+              <span class="p-val" id="p-learning">0</span>
+              <span class="p-lbl">Đang ôn tập</span>
+            </div>
+          </div>
+          <div class="p-card border-amber">
+            <div class="p-icon"><i class="fa-solid fa-fire"></i></div>
+            <div class="p-info">
+              <span class="p-val" id="p-streak">0</span>
+              <span class="p-lbl">Chuỗi học tập (Ngày)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-progress-list" id="module-progress-list">
+          <!-- Rendered via JS -->
+        </div>
+
+        <div class="danger-zone">
+          <button id="btn-reset-data" class="btn-danger"><i class="fa-solid fa-trash-can"></i> Đặt lại toàn bộ tiến độ học</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar for Mobile -->
+    <nav class="mobile-nav">
+      <button class="mobile-nav-btn active" data-tab="tab-home">
+        <i class="fa-solid fa-house"></i>
+        <span>Trang chủ</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="tab-search">
+        <i class="fa-solid fa-book-medical"></i>
+        <span>Tra cứu</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="tab-srs">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Học Anki</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="tab-quiz">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Bài tập</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="tab-ai-dict">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span>AI Dict</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="tab-progress">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Tiến độ</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- API Config Modal -->
+  <div id="modal-api-config" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-robot"></i> Cài Đặt AI Gemini API</h3>
+        <button class="btn-close-modal" id="btn-close-api-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">Dán API Key từ Google AI Studio và chọn Model Gemini bạn muốn sử dụng. Hệ thống sẽ tự động lưu vào trình duyệt của bạn.</p>
+
+        <div class="form-group">
+          <label for="input-api-key"><i class="fa-solid fa-key"></i> Gemini API Key:</label>
+          <div class="input-with-paste">
+            <input type="password" id="input-api-key" placeholder="AIzaSy...">
+            <button id="btn-toggle-key-vis" class="btn-sub"><i class="fa-solid fa-eye"></i></button>
+            <button id="btn-paste-api-key" class="btn-sub" title="Dán từ Clipboard (Ctrl+V / Đè Dán)"><i class="fa-solid fa-paste"></i> Dán</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="input-model-name"><i class="fa-solid fa-microchip"></i> Tên Model Gemini (Tự chọn / Điền tên):</label>
+          <div class="model-select-wrapper">
+            <input type="text" id="input-model-name" list="model-suggestions" placeholder="gemini-2.5-flash" value="gemini-2.5-flash">
+            <datalist id="model-suggestions">
+              <option value="gemini-2.5-flash">gemini-2.5-flash (Khuyên dùng - Nhanh & Chính xác)</option>
+              <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+              <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+              <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+              <option value="gemini-flash">gemini-flash</option>
+            </datalist>
+          </div>
+          <small class="field-hint">Bạn có thể tự chọn trong danh sách hoặc gõ trực tiếp tên Model bất kỳ (ví dụ: gemini-2.5-flash, gemini-flash...).</small>
+        </div>
+
+        <div class="modal-footer-actions">
+          <button id="btn-save-api-key" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Lưu Cấu Hình</button>
+          <button id="btn-clear-api-key" class="btn-secondary"><i class="fa-solid fa-eraser"></i> Xóa Key Saved</button>
+        </div>
+
+        <div id="api-key-msg" class="api-msg-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Term Detail Modal -->
+  <div id="modal-term-detail" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="m-term-title">Medical Term</h3>
+        <button class="btn-close-modal" id="btn-close-term-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="m-term-body">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  
+  <script>
 const MEDICAL_DATA = {
   "modules": [
     [
@@ -12134,3 +13683,773 @@ const MEDICAL_DATA = {
     }
   ]
 };
+
+
+/* ==========================================================================
+   MedTerm AI Pro - Medical English Web Application
+   Developed & Coded by Nhật Duy
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Application State
+  const state = {
+    currentTab: 'tab-home',
+    terms: MEDICAL_DATA.terms || [],
+    modules: MEDICAL_DATA.modules || [],
+    apiKey: localStorage.getItem('medterm_api_key') || '',
+    apiModel: localStorage.getItem('medterm_api_model') || 'gemini-2.5-flash',
+    progress: JSON.parse(localStorage.getItem('medterm_progress') || '{}'),
+    srsData: JSON.parse(localStorage.getItem('medterm_srs') || '{}'),
+    streak: parseInt(localStorage.getItem('medterm_streak') || '1'),
+    srsQueue: [],
+    currentSrsIndex: 0,
+    currentQuiz: null
+  };
+
+  // DOM Elements
+  const elements = {
+    navBtns: document.querySelectorAll('.nav-btn, .mobile-nav-btn'),
+    tabPages: document.querySelectorAll('.tab-page'),
+    modulesGrid: document.getElementById('modules-grid'),
+    termSearchInput: document.getElementById('term-search-input'),
+    btnClearSearch: document.getElementById('btn-clear-search'),
+    filterModuleSelect: document.getElementById('filter-module-select'),
+    termsGrid: document.getElementById('terms-grid'),
+    searchCount: document.getElementById('search-count'),
+    // SRS
+    srsCardContainer: document.getElementById('srs-card-container'),
+    srsModuleFilter: document.getElementById('srs-module-filter'),
+    // Quiz
+    quizContainer: document.getElementById('quiz-container'),
+    quizModeBtns: document.querySelectorAll('.quiz-mode-btn'),
+    // AI Dict
+    aiSearchInput: document.getElementById('ai-search-input'),
+    btnAiSearch: document.getElementById('btn-ai-search'),
+    aiDictResponse: document.getElementById('ai-dict-response'),
+    // Stats
+    statTotalTerms: document.getElementById('stat-total-terms'),
+    statMastered: document.getElementById('stat-mastered'),
+    statStreak: document.getElementById('stat-streak'),
+    // Progress
+    pTotal: document.getElementById('p-total'),
+    pMastered: document.getElementById('p-mastered'),
+    pLearning: document.getElementById('p-learning'),
+    pStreak: document.getElementById('p-streak'),
+    moduleProgressList: document.getElementById('module-progress-list'),
+    btnResetData: document.getElementById('btn-reset-data'),
+    // Modals & API
+    btnApiConfig: document.getElementById('btn-api-config'),
+    modalApiConfig: document.getElementById('modal-api-config'),
+    btnCloseApiModal: document.getElementById('btn-close-api-modal'),
+    inputApiKey: document.getElementById('input-api-key'),
+    inputModelName: document.getElementById('input-model-name'),
+    btnToggleKeyVis: document.getElementById('btn-toggle-key-vis'),
+    btnPasteApiKey: document.getElementById('btn-paste-api-key'),
+    btnSaveApiKey: document.getElementById('btn-save-api-key'),
+    btnClearApiKey: document.getElementById('btn-clear-api-key'),
+    apiKeyMsg: document.getElementById('api-key-msg'),
+    apiStatusDot: document.getElementById('api-status-dot'),
+    // Term Detail Modal
+    modalTermDetail: document.getElementById('modal-term-detail'),
+    btnCloseTermModal: document.getElementById('btn-close-term-modal'),
+    mTermTitle: document.getElementById('m-term-title'),
+    mTermBody: document.getElementById('m-term-body')
+  };
+
+  // --- 1. INITIALIZATION ---
+  function init() {
+    updateApiStatus();
+    populateSelectOptions();
+    renderModules();
+    renderTerms();
+    renderStats();
+    initSrs();
+    initQuiz('en_vi');
+    setupEventListeners();
+  }
+
+  // --- 2. NAVIGATION ---
+  function setupEventListeners() {
+    // Tab switching
+    elements.navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.dataset.tab;
+        switchTab(tabId);
+      });
+    });
+
+    // Theme toggle
+    document.getElementById('btn-theme-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Search events
+    elements.termSearchInput.addEventListener('input', (e) => {
+      if (e.target.value.trim()) {
+        elements.btnClearSearch.style.display = 'block';
+      } else {
+        elements.btnClearSearch.style.display = 'none';
+      }
+      renderTerms();
+    });
+
+    elements.btnClearSearch.addEventListener('click', () => {
+      elements.termSearchInput.value = '';
+      elements.btnClearSearch.style.display = 'none';
+      renderTerms();
+    });
+
+    elements.filterModuleSelect.addEventListener('change', renderTerms);
+
+    // SRS Filter
+    elements.srsModuleFilter.addEventListener('change', () => {
+      initSrs();
+    });
+
+    // Quiz Modes
+    elements.quizModeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elements.quizModeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        initQuiz(btn.dataset.mode);
+      });
+    });
+
+    // AI Search
+    elements.btnAiSearch.addEventListener('click', performAiSearch);
+    elements.aiSearchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') performAiSearch();
+    });
+
+    // API Modal Events
+    elements.btnApiConfig.addEventListener('click', () => {
+      elements.inputApiKey.value = state.apiKey;
+      elements.inputModelName.value = state.apiModel || 'gemini-2.5-flash';
+      elements.modalApiConfig.classList.add('active');
+    });
+
+    elements.btnCloseApiModal.addEventListener('click', () => {
+      elements.modalApiConfig.classList.remove('active');
+    });
+
+    elements.btnToggleKeyVis.addEventListener('click', () => {
+      const type = elements.inputApiKey.type === 'password' ? 'text' : 'password';
+      elements.inputApiKey.type = type;
+      elements.btnToggleKeyVis.innerHTML = type === 'password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+    });
+
+    elements.btnPasteApiKey.addEventListener('click', async () => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          const text = await navigator.clipboard.readText();
+          if (text) {
+            elements.inputApiKey.value = text.trim();
+            showApiMsg('Đã dán API Key từ Clipboard!', 'success');
+          }
+        } else {
+          const manual = prompt('Hãy dán Gemini API Key của bạn vào đây:');
+          if (manual) elements.inputApiKey.value = manual.trim();
+        }
+      } catch (err) {
+        const manual = prompt('Dán Gemini API Key của bạn:');
+        if (manual) elements.inputApiKey.value = manual.trim();
+      }
+    });
+
+    elements.btnSaveApiKey.addEventListener('click', () => {
+      const key = elements.inputApiKey.value.trim();
+      const model = elements.inputModelName.value.trim() || 'gemini-2.5-flash';
+
+      state.apiKey = key;
+      state.apiModel = model;
+      localStorage.setItem('medterm_api_key', key);
+      localStorage.setItem('medterm_api_model', model);
+
+      updateApiStatus();
+      showApiMsg(`Lưu thành công! API Key & Model (${model}) đã được lưu.`, 'success');
+      setTimeout(() => {
+        elements.modalApiConfig.classList.remove('active');
+      }, 1200);
+    });
+
+    elements.btnClearApiKey.addEventListener('click', () => {
+      state.apiKey = '';
+      localStorage.removeItem('medterm_api_key');
+      elements.inputApiKey.value = '';
+      updateApiStatus();
+      showApiMsg('Đã xóa API Key.', 'error');
+    });
+
+    // Term Modal Close
+    elements.btnCloseTermModal.addEventListener('click', () => {
+      elements.modalTermDetail.classList.remove('active');
+    });
+
+    // Reset Progress
+    elements.btnResetData.addEventListener('click', () => {
+      if (confirm('Bạn có chắc chắn muốn đặt lại toàn bộ tiến độ học tập?')) {
+        localStorage.removeItem('medterm_progress');
+        localStorage.removeItem('medterm_srs');
+        state.progress = {};
+        state.srsData = {};
+        renderStats();
+        renderModuleProgress();
+        alert('Đã đặt lại tiến độ.');
+      }
+    });
+  }
+
+  function switchTab(tabId) {
+    state.currentTab = tabId;
+    elements.navBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tab === tabId);
+    });
+    elements.tabPages.forEach(page => {
+      page.classList.toggle('active', page.id === tabId);
+    });
+
+    if (tabId === 'tab-progress') {
+      renderModuleProgress();
+    }
+  }
+
+  function updateApiStatus() {
+    if (state.apiKey) {
+      elements.apiStatusDot.classList.add('active');
+    } else {
+      elements.apiStatusDot.classList.remove('active');
+    }
+  }
+
+  function showApiMsg(msg, type) {
+    elements.apiKeyMsg.textContent = msg;
+    elements.apiKeyMsg.className = `api-msg-box ${type}`;
+  }
+
+  // --- 3. RENDERING MODULES & TERMS ---
+  function populateSelectOptions() {
+    elements.filterModuleSelect.innerHTML = '<option value="all">-- Tất cả hệ cơ quan & chuyên đề --</option>';
+    elements.srsModuleFilter.innerHTML = '<option value="all">Tất cả bài học</option>';
+
+    state.modules.forEach(([id, name]) => {
+      const opt = `<option value="${id}">${name}</option>`;
+      elements.filterModuleSelect.insertAdjacentHTML('beforeend', opt);
+      elements.srsModuleFilter.insertAdjacentHTML('beforeend', opt);
+    });
+  }
+
+  function renderModules() {
+    elements.modulesGrid.innerHTML = '';
+    const moduleIcons = {
+      cau_tao: 'fa-cubes',
+      goc_tu: 'fa-tree',
+      nguon_goc: 'fa-monument',
+      dang_ket_hop: 'fa-link',
+      hau_to: 'fa-tag',
+      tien_to: 'fa-tags',
+      phien_am: 'fa-volume-high',
+      tong_quan: 'fa-child',
+      tim_mach: 'fa-heart-pulse',
+      ho_hap: 'fa-lungs',
+      tieu_hoa: 'fa-apple-whole',
+      than_kinh: 'fa-brain',
+      sinh_san_nu: 'fa-venus'
+    };
+
+    state.modules.forEach(([id, name]) => {
+      const count = state.terms.filter(t => t.module === id).length;
+      const icon = moduleIcons[id] || 'fa-notes-medical';
+
+      const card = document.createElement('div');
+      card.className = 'module-card';
+      card.innerHTML = `
+        <div class="module-icon"><i class="fa-solid ${icon}"></i></div>
+        <div class="module-info">
+          <h4>${name}</h4>
+          <span class="module-count">${count} Thuật ngữ & Kiến thức</span>
+        </div>
+      `;
+      card.addEventListener('click', () => {
+        elements.filterModuleSelect.value = id;
+        switchTab('tab-search');
+        renderTerms();
+      });
+      elements.modulesGrid.appendChild(card);
+    });
+  }
+
+  function renderTerms() {
+    const query = elements.termSearchInput.value.toLowerCase().trim();
+    const mod = elements.filterModuleSelect.value;
+
+    let filtered = state.terms.filter(item => {
+      const matchMod = mod === 'all' || item.module === mod;
+      const matchQuery = !query || 
+        item.term.toLowerCase().includes(query) ||
+        item.vietnamese.toLowerCase().includes(query) ||
+        item.note.toLowerCase().includes(query) ||
+        item.phonetic.toLowerCase().includes(query);
+      return matchMod && matchQuery;
+    });
+
+    elements.searchCount.textContent = filtered.length;
+    elements.termsGrid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      elements.termsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Không tìm thấy thuật ngữ phù hợp với từ khóa.</p>`;
+      return;
+    }
+
+    filtered.slice(0, 100).forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'term-card';
+      card.innerHTML = `
+        <div>
+          <div class="term-header">
+            <div class="term-word">${escapeHtml(item.term)}</div>
+            <button class="btn-speak" onclick="event.stopPropagation(); speakText('${escapeJs(item.term)}')">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+          </div>
+          ${item.phonetic ? `<div class="term-phonetic">${escapeHtml(item.phonetic)}</div>` : ''}
+          <div class="term-meaning">${escapeHtml(item.vietnamese || 'Đang cập nhật')}</div>
+          ${item.note ? `<div class="term-note">${escapeHtml(item.note)}</div>` : ''}
+        </div>
+        <div class="term-footer">
+          <span class="term-tag">${escapeHtml(item.module_name)}</span>
+          <button class="btn-sub" style="font-size:11px; padding: 4px 8px;" onclick="event.stopPropagation(); openAiForTerm('${escapeJs(item.term)}')">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> AI Tra cứu
+          </button>
+        </div>
+      `;
+      card.addEventListener('click', () => openTermDetail(item));
+      elements.termsGrid.appendChild(card);
+    });
+  }
+
+  // --- 4. ANKI / SRS LOGIC ---
+  function initSrs() {
+    const selectedMod = elements.srsModuleFilter.value;
+    state.srsQueue = state.terms.filter(t => selectedMod === 'all' || t.module === selectedMod);
+    state.currentSrsIndex = 0;
+    renderSrsCard();
+  }
+
+  function renderSrsCard() {
+    if (!state.srsQueue || state.srsQueue.length === 0) {
+      elements.srsCardContainer.innerHTML = `
+        <div class="flashcard-box">
+          <h3><i class="fa-solid fa-circle-check" style="color:var(--accent-emerald);"></i> Đã hoàn thành bộ thẻ!</h3>
+          <p style="color:var(--text-secondary); margin-top:10px;">Bạn đã xem qua tất cả thuật ngữ trong danh mục này.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const item = state.srsQueue[state.currentSrsIndex];
+    elements.srsCardContainer.innerHTML = `
+      <div class="flashcard-box" id="flashcard-el">
+        <div class="card-front">
+          <span class="hero-tag" style="margin-bottom:16px;">${escapeHtml(item.module_name)}</span>
+          <h2 style="font-size: 28px; font-weight:800; margin-bottom:12px;">${escapeHtml(item.term)}</h2>
+          <button class="btn-icon" style="margin: 0 auto 16px auto;" onclick="event.stopPropagation(); speakText('${escapeJs(item.term)}')">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <p class="card-hint"><i class="fa-solid fa-hand-pointer"></i> Chạm để lật xem đáp án</p>
+        </div>
+        <div class="card-back" style="display:none;">
+          <h2 style="font-size: 24px; color:var(--accent-cyan); margin-bottom:8px;">${escapeHtml(item.term)}</h2>
+          ${item.phonetic ? `<p style="font-family:var(--font-mono); color:var(--accent-cyan); margin-bottom:12px;">${escapeHtml(item.phonetic)}</p>` : ''}
+          <h3 style="font-size: 20px; color:var(--accent-emerald); margin-bottom:12px;">${escapeHtml(item.vietnamese)}</h3>
+          ${item.note ? `<p style="font-size:14px; color:var(--text-secondary); max-width:450px; margin-bottom:16px;">${escapeHtml(item.note)}</p>` : ''}
+          
+          <div class="srs-buttons-row" onclick="event.stopPropagation();">
+            <button class="btn-srs btn-again" onclick="rateSrs('${item.id}', 1)">
+              <span>Lặp lại</span><span class="sub">+1m</span>
+            </button>
+            <button class="btn-srs btn-hard" onclick="rateSrs('${item.id}', 2)">
+              <span>Khó</span><span class="sub">+1d</span>
+            </button>
+            <button class="btn-srs btn-good" onclick="rateSrs('${item.id}', 3)">
+              <span>Tốt</span><span class="sub">+3d</span>
+            </button>
+            <button class="btn-srs btn-easy" onclick="rateSrs('${item.id}', 4)">
+              <span>Rất dễ</span><span class="sub">+6d</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const el = document.getElementById('flashcard-el');
+    el.addEventListener('click', () => {
+      const front = el.querySelector('.card-front');
+      const back = el.querySelector('.card-back');
+      if (front.style.display !== 'none') {
+        front.style.display = 'none';
+        back.style.display = 'block';
+        el.classList.add('flipped');
+      } else {
+        front.style.display = 'block';
+        back.style.display = 'none';
+        el.classList.remove('flipped');
+      }
+    });
+  }
+
+  window.rateSrs = function(id, rating) {
+    const srs = state.srsData[id] || { level: 0, reps: 0 };
+    if (rating >= 3) {
+      srs.level = (srs.level || 0) + 1;
+      srs.reps = (srs.reps || 0) + 1;
+    } else {
+      srs.level = Math.max(0, (srs.level || 0) - 1);
+    }
+    state.srsData[id] = srs;
+    localStorage.setItem('medterm_srs', JSON.stringify(state.srsData));
+
+    state.currentSrsIndex = (state.currentSrsIndex + 1) % state.srsQueue.length;
+    renderStats();
+    renderSrsCard();
+  };
+
+  // --- 5. QUIZ ENGINE ---
+  function initQuiz(mode) {
+    if (state.terms.length < 4) return;
+
+    // Pick a random target
+    const target = state.terms[Math.floor(Math.random() * state.terms.length)];
+    
+    // Pick 3 distractor options
+    const dists = [];
+    while (dists.length < 3) {
+      const rand = state.terms[Math.floor(Math.random() * state.terms.length)];
+      if (rand.id !== target.id && !dists.includes(rand)) {
+        dists.push(rand);
+      }
+    }
+
+    const options = [target, ...dists].sort(() => Math.random() - 0.5);
+
+    if (mode === 'en_vi') {
+      elements.quizContainer.innerHTML = `
+        <div class="quiz-question-title">" ${escapeHtml(target.term)} " mang nghĩa tiếng Việt là gì?</div>
+        <div class="quiz-options">
+          ${options.map(opt => `
+            <button class="quiz-opt-btn" onclick="checkQuizAnswer(this, ${opt.id === target.id})">
+              ${escapeHtml(opt.vietnamese || 'Thuật ngữ Y khoa')}
+            </button>
+          `).join('')}
+        </div>
+      `;
+    } else if (mode === 'vi_en') {
+      elements.quizContainer.innerHTML = `
+        <div class="quiz-question-title">Thuật ngữ Tiếng Anh của " ${escapeHtml(target.vietnamese || target.term)} " là gì?</div>
+        <div class="quiz-options">
+          ${options.map(opt => `
+            <button class="quiz-opt-btn" onclick="checkQuizAnswer(this, ${opt.id === target.id})">
+              <strong>${escapeHtml(opt.term)}</strong> ${opt.phonetic ? `<small>(${escapeHtml(opt.phonetic)})</small>` : ''}
+            </button>
+          `).join('')}
+        </div>
+      `;
+    } else {
+      // Root Matching
+      const rootTerms = state.terms.filter(t => t.term.includes('-') || t.note.includes('gốc'));
+      const sampleRoot = rootTerms.length > 0 ? rootTerms[Math.floor(Math.random() * rootTerms.length)] : target;
+      elements.quizContainer.innerHTML = `
+        <div class="quiz-question-title">Gốc từ / Căn tố " ${escapeHtml(sampleRoot.term)} " biểu thị ý nghĩa nào?</div>
+        <div class="quiz-options">
+          ${options.map(opt => `
+            <button class="quiz-opt-btn" onclick="checkQuizAnswer(this, ${opt.id === sampleRoot.id})">
+              ${escapeHtml(opt.vietnamese || opt.note || 'Ý nghĩa y khoa')}
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+  }
+
+  window.checkQuizAnswer = function(btn, isCorrect) {
+    const opts = elements.quizContainer.querySelectorAll('.quiz-opt-btn');
+    opts.forEach(b => b.disabled = true);
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      setTimeout(() => {
+        const activeBtn = document.querySelector('.quiz-mode-btn.active');
+        initQuiz(activeBtn ? activeBtn.dataset.mode : 'en_vi');
+      }, 1000);
+    } else {
+      btn.classList.add('wrong');
+      setTimeout(() => {
+        const activeBtn = document.querySelector('.quiz-mode-btn.active');
+        initQuiz(activeBtn ? activeBtn.dataset.mode : 'en_vi');
+      }, 1400);
+    }
+  };
+
+  // --- 6. AI DICTIONARY & GEMINI API INTEGRATION ---
+  window.openAiForTerm = function(term) {
+    elements.aiSearchInput.value = term;
+    switchTab('tab-ai-dict');
+    performAiSearch();
+  };
+
+  window.quickAiSearch = function(term) {
+    elements.aiSearchInput.value = term;
+    performAiSearch();
+  };
+
+  async function performAiSearch() {
+    const query = elements.aiSearchInput.value.trim();
+    if (!query) return;
+
+    elements.aiDictResponse.innerHTML = `
+      <div style="text-align:center; padding: 40px 0;">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size:32px; color:var(--accent-cyan); margin-bottom:12px;"></i>
+        <p style="color:var(--text-secondary);">Đang gửi truy vấn tới AI Gemini (${escapeHtml(state.apiModel)})...</p>
+      </div>
+    `;
+
+    // Local DB lookup for instant context
+    const localMatch = state.terms.find(t => t.term.toLowerCase() === query.toLowerCase() || t.term.toLowerCase().includes(query.toLowerCase()));
+
+    if (!state.apiKey) {
+      // Fallback local dictionary response if API key is not provided
+      setTimeout(() => {
+        elements.aiDictResponse.innerHTML = renderLocalAiFallback(query, localMatch);
+      }, 400);
+      return;
+    }
+
+    try {
+      const model = state.apiModel || 'gemini-2.5-flash';
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${state.apiKey}`;
+
+      const prompt = `
+Role: Professional Medical English Expert & Academic Professor.
+Task: Explain the medical term "${query}" for a medical student.
+
+STRICT FORMAT REQUIREMENT:
+You MUST format your exact response as structured markdown as follows:
+
+Hello! Here is the explanation of the medical term "${query}" prepared for your studies.
+
+${query}
+Phonetic: /phonetic_spelling/
+
+1. Meaning in Vietnamese (Nghĩa tiếng Việt)
+[Vietnamese translation name]
+[Detailed Vietnamese explanation and main functions/Chức năng chính]
+
+2. Meaning in English
+[Detailed English medical definition]
+
+3. Clinical Example (Ví dụ lâm sàng)
+English: "[Clinical example sentence in English]"
+Vietnamese: "[Vietnamese translation of clinical example]"
+
+4. Word Analysis & Related Medical Roots (Phân tích từ vựng & Căn tố y khoa)
+While "${query}" uses standard English terms, medical terminology frequently uses Greek and Latin roots to describe specific parts of this system:
+- [Root/Prefix/Suffix] (Greek/Latin root for ...): Example: [Example Term]: [Vietnamese translation]
+- [Root/Prefix/Suffix] (Greek/Latin root for ...): Example: [Example Term]: [Vietnamese translation]
+
+Good luck with your medical studies! Feel free to ask if you need further clarification on any related anatomical terms.
+`;
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (aiText) {
+        elements.aiDictResponse.innerHTML = formatAiResponseToCard(aiText, query, localMatch);
+      } else {
+        throw new Error('Không nhận được phản hồi từ AI.');
+      }
+    } catch (err) {
+      console.error(err);
+      elements.aiDictResponse.innerHTML = `
+        <div class="api-msg-box error" style="display:block;">
+          <p><strong><i class="fa-solid fa-triangle-exclamation"></i> Lỗi kết nối Gemini API:</strong> ${escapeHtml(err.message)}</p>
+          <p style="margin-top:6px; font-size:12px;">Vui lòng kiểm tra lại API Key và Tên Model trong phần Cài đặt API (biểu tượng chìa khóa ở góc trên).</p>
+        </div>
+        ${renderLocalAiFallback(query, localMatch)}
+      `;
+    }
+  }
+
+  function formatAiResponseToCard(text, query, localMatch) {
+    // Parse markdown sections cleanly
+    let html = `<div class="ai-result-content">`;
+    
+    // Process markdown to HTML
+    let formatted = text
+      .replace(/Hello! Here is the explanation/g, '<div class="ai-greeting">Hello! Here is the explanation')
+      .replace(/prepared for your studies\./g, 'prepared for your studies.</div>')
+      .replace(/Phonetic:\s*(.*)/g, '<div class="ai-phonetic">Phonetic: $1</div>')
+      .replace(/1\. Meaning in Vietnamese \(Nghĩa tiếng Việt\)/g, '<div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-language"></i> 1. Meaning in Vietnamese (Nghĩa tiếng Việt)</div><div class="ai-section-content">')
+      .replace(/2\. Meaning in English/g, '</div></div><div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-book"></i> 2. Meaning in English</div><div class="ai-section-content">')
+      .replace(/3\. Clinical Example \(Ví dụ lâm sàng\)/g, '</div></div><div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-stethoscope"></i> 3. Clinical Example (Ví dụ lâm sàng)</div><div class="ai-section-content">')
+      .replace(/4\. Word Analysis & Related Medical Roots \(Phân tích từ vựng & Căn tố y khoa\)/g, '</div></div><div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-dna"></i> 4. Word Analysis & Related Medical Roots (Phân tích từ vựng & Căn tố y khoa)</div><div class="ai-section-content">')
+      .replace(/Good luck with your medical studies!/g, '</div></div><div class="ai-footer-note">Good luck with your medical studies!')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+
+    html += formatted + `</div></div>`;
+    return html;
+  }
+
+  function renderLocalAiFallback(query, localMatch) {
+    if (!localMatch) {
+      return `
+        <div class="ai-welcome-box">
+          <i class="fa-solid fa-circle-info" style="font-size:32px; color:var(--accent-amber); margin-bottom:12px;"></i>
+          <h3>Chưa cấu hình Gemini API Key</h3>
+          <p style="color:var(--text-secondary); margin-top:8px;">Hãy bấm biểu tượng chìa khóa <i class="fa-solid fa-key"></i> ở góc trên màn hình để dán Gemini API Key và tận hưởng tính năng AI Tra Cứu Y Khoa chuyên sâu!</p>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="ai-result-content">
+        <div class="ai-greeting">Hello! Here is the explanation of the medical term "${escapeHtml(localMatch.term)}" prepared for your studies.</div>
+        
+        <div style="margin-bottom:16px;">
+          <h2 class="ai-term-title">${escapeHtml(localMatch.term)}</h2>
+          ${localMatch.phonetic ? `<div class="ai-phonetic">Phonetic: ${escapeHtml(localMatch.phonetic)}</div>` : ''}
+        </div>
+
+        <div class="ai-section">
+          <div class="ai-section-title"><i class="fa-solid fa-language"></i> 1. Meaning in Vietnamese (Nghĩa tiếng Việt)</div>
+          <div class="ai-section-content">
+            <p><strong>${escapeHtml(localMatch.vietnamese)}</strong></p>
+            <p>${escapeHtml(localMatch.note || 'Thuộc chuyên đề ' + localMatch.module_name)}</p>
+          </div>
+        </div>
+
+        <div class="ai-section">
+          <div class="ai-section-title"><i class="fa-solid fa-dna"></i> 2. Chuyên đề & Cấu trúc</div>
+          <div class="ai-section-content">
+            <p>Chuyên khoa: <strong>${escapeHtml(localMatch.module_name)}</strong></p>
+          </div>
+        </div>
+
+        <div class="ai-footer-note">
+          <p><i class="fa-solid fa-circle-info"></i> Bạn muốn tra cứu chi tiết ví dụ lâm sàng & căn tố La-tinh/Hy Lạp của AI? Hãy bấm biểu tượng <i class="fa-solid fa-key"></i> để dán Gemini API Key & chọn Model!</p>
+        </div>
+      </div>
+    `;
+  }
+
+  function openTermDetail(item) {
+    elements.mTermTitle.textContent = item.term;
+    elements.mTermBody.innerHTML = `
+      <div style="margin-bottom:12px;">
+        ${item.phonetic ? `<p style="font-family:var(--font-mono); color:var(--accent-cyan); font-size:15px;">Phên âm: ${escapeHtml(item.phonetic)}</p>` : ''}
+        <h4 style="font-size:18px; color:var(--accent-emerald); margin-top:6px;">Nghĩa: ${escapeHtml(item.vietnamese)}</h4>
+      </div>
+      ${item.note ? `<p style="color:var(--text-secondary); margin-bottom:16px; font-size:14px; line-height:1.5;">${escapeHtml(item.note)}</p>` : ''}
+      <div style="background:var(--bg-dark); padding:12px; border-radius:var(--radius-md); margin-bottom:16px;">
+        <span style="font-size:12px; color:var(--text-muted); font-weight:600;">CHUYÊN ĐỀ Y KHOA:</span>
+        <p style="font-weight:700; color:var(--accent-blue);">${escapeHtml(item.module_name)}</p>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-primary" onclick="speakText('${escapeJs(item.term)}')"><i class="fa-solid fa-volume-high"></i> Phát âm</button>
+        <button class="btn-secondary" onclick="elements.modalTermDetail.classList.remove('active'); openAiForTerm('${escapeJs(item.term)}');"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Tra cứu sâu</button>
+      </div>
+    `;
+    elements.modalTermDetail.classList.add('active');
+  }
+
+  // --- 7. STATS & PROGRESS ---
+  function renderStats() {
+    elements.statTotalTerms.textContent = state.terms.length.toLocaleString();
+    elements.pTotal.textContent = state.terms.length.toLocaleString();
+
+    let masteredCount = 0;
+    let learningCount = 0;
+
+    Object.values(state.srsData).forEach(item => {
+      if (item.level >= 4) masteredCount++;
+      else if (item.level > 0) learningCount++;
+    });
+
+    elements.statMastered.textContent = masteredCount;
+    elements.pMastered.textContent = masteredCount;
+    elements.pLearning.textContent = learningCount;
+
+    elements.statStreak.textContent = `${state.streak} ngày`;
+    elements.pStreak.textContent = state.streak;
+  }
+
+  function renderModuleProgress() {
+    elements.moduleProgressList.innerHTML = '';
+
+    state.modules.forEach(([id, name]) => {
+      const moduleTerms = state.terms.filter(t => t.module === id);
+      const total = moduleTerms.length;
+      let mastered = 0;
+
+      moduleTerms.forEach(t => {
+        const srs = state.srsData[t.id];
+        if (srs && srs.level >= 4) mastered++;
+      });
+
+      const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+
+      const item = document.createElement('div');
+      item.className = 'm-prog-item';
+      item.innerHTML = `
+        <div class="m-prog-header">
+          <span>${name}</span>
+          <span>${mastered} / ${total} (${pct}%)</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: ${pct}%;"></div>
+        </div>
+      `;
+      elements.moduleProgressList.appendChild(item);
+    });
+  }
+
+  // --- 8. AUDIO SPEECH SYNTHESIS ---
+  window.speakText = function(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Helper escape utilities
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function escapeJs(str) {
+    if (!str) return '';
+    return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+  }
+
+  // Initialize
+  init();
+});
+
+</script>
+</body>
+</html>
