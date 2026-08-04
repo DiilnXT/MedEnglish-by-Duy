@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MedTerminology ANKI - Website Học Tiếng Anh Y Khoa Chuyên Ngành</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header & Navigation Bar -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="brand">
+        <div class="brand-icon">🩺</div>
+        <div>
+          <span class="brand-title">MedEnglish ANKI Pro</span>
+          <span class="brand-badge">v2.0 SRS</span>
+        </div>
+      </a>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" data-tab="tab-dashboard">📊 Tiến độ & Bài học</button>
+        <button class="nav-btn" data-tab="tab-flashcards">🎴 Học ANKI (SRS)</button>
+        <button class="nav-btn" data-tab="tab-quiz">📝 Bài tập Tương tác</button>
+        <button class="nav-btn" data-tab="tab-dictionary">🔍 Tra cứu & Trợ lý AI</button>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" title="Đổi giao diện Tối/Sáng">☀️</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace Layout -->
+  <main>
+
+    <!-- Tab 1: Dashboard & Progress Analytics -->
+    <section id="tab-dashboard" class="tab-content active">
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📚</div>
+          <div class="stat-info">
+            <h4>Tổng số thuật ngữ</h4>
+            <div class="value" id="stat-total">1,574</div>
+          </div>
+        </div>
+
+        <div class="stat-card emerald">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <h4>Đã thuộc vững (Mastered)</h4>
+            <div class="value" id="stat-mastered">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card amber">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-info">
+            <h4>Đang ghi nhớ (Learning)</h4>
+            <div class="value" id="stat-learning">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card purple">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-info">
+            <h4>Tỷ lệ hoàn thành</h4>
+            <div class="value" id="stat-percent">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module Selection Grid -->
+      <div class="module-selector-section">
+        <div class="section-title">
+          <span>📖 Danh mục Bài học theo Chuyên khoa & Cấu trúc</span>
+          <small style="font-size:0.85rem; color:var(--text-muted); font-weight:normal;">Chọn bài học để ôn tập chuyên sâu</small>
+        </div>
+        <div class="module-grid" id="module-grid">
+          <!-- Dynamic Modules rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: ANKI Spaced Repetition Flashcards -->
+    <section id="tab-flashcards" class="tab-content">
+      <div class="srs-container">
+        <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+          <div style="font-weight:700; font-size:1.1rem; color:var(--accent-cyan);">🎴 Thẻ Thẻ ANKI (Lặp lại ngắt quãng - SM-2)</div>
+          <div id="srs-queue-counter" style="font-size:0.9rem; color:var(--text-secondary); background:var(--bg-card); padding:0.25rem 0.75rem; border-radius:var(--radius-full); border:1px solid var(--border-color);">Thẻ 1 / 1574</div>
+        </div>
+
+        <div class="flashcard-wrapper" id="flashcard-wrapper">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- ANKI Control Buttons -->
+        <div class="srs-controls">
+          <button class="rate-btn rate-again" id="rate-again">
+            <span class="label">🔴 Quên (Again)</span>
+            <span class="sub">< 1 phút</span>
+          </button>
+          <button class="rate-btn rate-hard" id="rate-hard">
+            <span class="label">🟠 Khó (Hard)</span>
+            <span class="sub">1 ngày</span>
+          </button>
+          <button class="rate-btn rate-good" id="rate-good">
+            <span class="label">🔵 Tốt (Good)</span>
+            <span class="sub">6 ngày</span>
+          </button>
+          <button class="rate-btn rate-easy" id="rate-easy">
+            <span class="label">🟢 Dễ (Easy)</span>
+            <span class="sub">12 ngày</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Interactive Exercises & Speech Practice -->
+    <section id="tab-quiz" class="tab-content">
+      <div class="quiz-container">
+        <div id="quiz-card">
+          <!-- Interactive Quiz Content -->
+        </div>
+        <div style="margin-top: 1.5rem; text-align: right;">
+          <button class="btn-primary" id="quiz-next-btn">Câu tiếp theo ➡️</button>
+        </div>
+      </div>
+
+      <!-- Speech Pronunciation Practice Section -->
+      <div class="quiz-container" style="margin-top: 2rem;">
+        <div class="section-title">
+          <span>🎙️ Luyện Phát Âm & Nhận Diện Giọng Nói</span>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1rem;">
+          Thực hành đọc to thuật ngữ Y khoa chuyên ngành. Nhấn micro và nói vào micro thiết bị để kiểm tra phát âm của bạn.
+        </p>
+        <div class="speech-practice-card">
+          <button class="mic-btn" id="mic-practice-btn" title="Bắt đầu nói">🎙️</button>
+          <div id="speech-result" style="margin-top:0.75rem; font-weight:600; color:var(--accent-cyan);">
+            Nhấn micro để bắt đầu luyện đọc
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Dictionary Search & AI Assistant -->
+    <section id="tab-dictionary" class="tab-content">
+      <div class="dictionary-container">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="dict-search-input" placeholder="Tra cứu thuật ngữ tiếng Anh, tiếng Việt, tiền tố, hậu tố (ví dụ: hyperthyroidism, gastr, viêm phổi)...">
+        </div>
+
+        <div class="ai-assistant-card">
+          <div class="ai-header">
+            <span>🤖 Trợ lý Trí Tuệ Nhân Tạo (AI Medical Assistant)</span>
+          </div>
+          <div class="ai-body" id="ai-assistant-output">
+            🤖 <b>Trợ lý AI Y Khoa:</b> Nhập thuật ngữ, tiền tố, hậu tố hoặc câu hỏi (ví dụ: <i>hyperthyroidism, gastroenteritis, viêm phổi, gốc từ dạ dày</i>) để nhận phân tích tự động.
+          </div>
+        </div>
+
+        <div class="section-title">
+          <span>📚 Danh sách Thuật ngữ Tra cứu</span>
+        </div>
+
+        <div class="dict-list" id="dict-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-direction:column; gap:0.5rem; align-items:center;">
+      <p><b>MedEnglish ANKI Pro</b> — Nền tảng Học Tiếng Anh Y Khoa Chuyên Ngành Thông Minh</p>
+      <p style="font-size:0.8rem;">Dữ liệu tích hợp đầy đủ 100% từ 13 chuyên đề Y khoa | Hỗ trợ SRS Anki, Phát âm Audio TTS, Bài tập Tương tác & Trợ lý AI</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="medical_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
