@@ -1259,7 +1259,7 @@ body {
 }
 
 
-/* Additional Styling for AI Dictionary Screenshot Match & Developer Credits */
+/* Additional Styling for Developer Credits & AI Dictionary Response Match */
 .author-credit {
   display: block;
   font-size: 0.75rem;
@@ -1283,104 +1283,52 @@ body {
   margin-bottom: 10px;
 }
 
-/* AI DICTIONARY SCREENSHOT EXACT MATCHING STYLES */
-.ai-dict-header {
-  margin-bottom: 1rem;
-}
-
-.ai-dict-header h2 {
-  font-size: 1.8rem;
-  font-weight: 800;
-}
-
-.brand-blue { color: var(--accent-blue); }
-
-.ai-search-input-box {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.ai-search-input-box input {
-  flex: 1;
-  padding: 0.9rem 1.25rem;
-  background: #111827;
-  border: 1px solid #374151;
-  border-radius: var(--radius-md);
-  color: #fff;
-  font-size: 1rem;
-  font-family: var(--font-sans);
-}
-
-.ai-search-input-box input:focus {
-  outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-
-.ai-response-card {
+/* AI Response Message Box */
+.ai-response-box {
   background: #111827;
   border: 1px solid #1f2937;
   border-radius: var(--radius-lg);
-  padding: 1.75rem;
+  padding: 1.5rem;
   line-height: 1.7;
   color: #e5e7eb;
   font-size: 0.95rem;
   box-shadow: var(--shadow-main);
+  margin-top: 1rem;
 }
 
-.ai-result-content {
-  color: #e5e7eb;
-}
-
-.ai-greeting {
+.ai-response-box .ai-greeting {
   color: #9ca3af;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   margin-bottom: 0.75rem;
 }
 
-.ai-term-title {
-  font-size: 1.4rem;
+.ai-response-box .ai-term-title {
+  font-size: 1.35rem;
   font-weight: 800;
   color: #ffffff;
   margin-bottom: 0.2rem;
 }
 
-.ai-phonetic {
+.ai-response-box .ai-phonetic {
   font-family: var(--font-mono);
   color: #38bdf8;
-  font-size: 0.9rem;
-  margin-bottom: 1.25rem;
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
 }
 
-.ai-section {
-  margin-bottom: 1.25rem;
-}
-
-.ai-section-title {
+.ai-response-box .ai-section-title {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.98rem;
   color: #ffffff;
+  margin-top: 1rem;
   margin-bottom: 0.4rem;
 }
 
-.ai-section-content {
-  color: #d1d5db;
-  padding-left: 0.2rem;
-}
-
-.ai-footer-note {
+.ai-response-box .ai-footer-note {
   border-top: 1px solid #1f2937;
-  padding-top: 1rem;
-  margin-top: 1.5rem;
+  padding-top: 0.75rem;
+  margin-top: 1.25rem;
   font-style: italic;
   color: #9ca3af;
-  font-size: 0.88rem;
-}
-
-/* Mobile responsive fixes */
-@media (max-width: 768px) {
-  .ai-search-input-box {
-    flex-direction: column;
-  }
+  font-size: 0.85rem;
 }
