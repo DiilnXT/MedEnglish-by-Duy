@@ -223,6 +223,14 @@ window.toggleGameHints = function() {
   state.showGameHints = !state.showGameHints;
   localStorage.setItem('medterm_game_hints', state.showGameHints ? 'true' : 'false');
   window.updateHintToggleButton();
+  
+  // Directly update hint visibility on all existing pool buttons without resetting selected state
+  const hintEls = document.querySelectorAll('.game-part-hint');
+  hintEls.forEach(el => {
+    el.style.display = state.showGameHints ? 'inline' : 'none';
+  });
+  
+  // Re-render stage if needed
   if (state.currentMatchTarget) {
     window.renderGameStage();
   }
@@ -477,7 +485,7 @@ window.renderGameStage = function() {
       ${shuffledParts.map((p, idx) => `
         <button class="part-card ${p.type}" id="pool-part-${idx}" onclick="window.selectPart(${idx}, '${escapeJs(p.text)}')">
           <span>${escapeHtml(p.text)}</span>
-          ${state.showGameHints ? `<small style="font-size:0.7rem; opacity:0.85;">(${escapeHtml(p.hint)})</small>` : ''}
+          ${state.showGameHints && p.hint ? `<small class="game-part-hint" style="font-size:0.75rem; opacity:0.85; margin-left:4px;">(${escapeHtml(p.hint)})</small>` : ''}
         </button>
       `).join('')}
     </div>
