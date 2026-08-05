@@ -87,6 +87,7 @@ header {
   gap: 0.75rem;
   text-decoration: none;
   color: var(--text-primary);
+  flex-shrink: 0;
 }
 
 .brand-icon {
@@ -102,37 +103,63 @@ header {
   box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
 }
 
+.brand-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .brand-title-wrap {
   display: flex;
   align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
 }
 
 .brand-title {
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
 .brand-badge {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   background: rgba(6, 182, 212, 0.15);
   color: var(--accent-cyan);
   border: 1px solid rgba(6, 182, 212, 0.3);
-  padding: 0.15rem 0.5rem;
+  padding: 0.1rem 0.45rem;
   border-radius: var(--radius-full);
-  margin-left: 0.5rem;
   font-weight: 700;
 }
 
 .author-credit {
-  display: block;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-secondary);
+  white-space: nowrap;
+  margin-top: 2px;
 }
 
-.author-credit strong {
+.author-link {
   color: var(--accent-cyan);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.author-link:hover {
+  text-decoration: underline;
+}
+
+.hero-author-link {
+  color: var(--accent-emerald);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-author-link:hover {
+  text-decoration: underline;
 }
 
 .nav-tabs {
@@ -1370,33 +1397,4 @@ footer {
   .hero-left h2 { font-size: 1.3rem; }
   .quiz-palette { grid-template-columns: repeat(5, 1fr); }
   .srs-controls { grid-template-columns: repeat(2, 1fr); }
-}
-
-.author-credit {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  line-height: 1.2;
-}
-
-.author-link {
-  color: var(--accent-cyan);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.author-link:hover {
-  text-decoration: underline;
-}
-
-.hero-author-link {
-  color: var(--accent-emerald);
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.hero-author-link:hover {
-  text-decoration: underline;
 }

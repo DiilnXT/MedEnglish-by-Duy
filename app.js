@@ -1251,12 +1251,10 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.srsModuleSelect.addEventListener('change', window.initSrs);
   }
 
-  if (elements.btnToggleHints) {
-    elements.btnToggleHints.addEventListener('click', window.toggleGameHints);
-  }
+  // Handled via onclick in HTML / window.toggleGameHints
 
   if (elements.btnAiSearch) {
-    elements.btnAiSearch.addEventListener('click', window.performAiSearch);
+    // Handled via onclick in HTML / window.performAiSearch
   }
 
   if (elements.aiSearchInput) {
@@ -1273,9 +1271,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  if (elements.btnStartQuiz) {
-    elements.btnStartQuiz.addEventListener('click', window.startNewQuizExam);
-  }
+  // Handled via onclick in HTML / window.startNewQuizExam
 
   if (elements.btnApiModal) {
     elements.btnApiModal.addEventListener('click', () => {
