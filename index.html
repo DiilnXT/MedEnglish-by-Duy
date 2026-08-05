@@ -27,12 +27,12 @@
       </a>
 
       <nav class="nav-tabs desktop-nav">
-        <button class="nav-btn active" data-tab="tab-dashboard"><i class="fa-solid fa-chart-pie"></i> Trang chủ</button>
-        <button class="nav-btn" data-tab="tab-dictionary"><i class="fa-solid fa-magnifying-glass"></i> Tra cứu</button>
-        <button class="nav-btn" data-tab="tab-flashcards"><i class="fa-solid fa-layer-group"></i> Thẻ ANKI</button>
-        <button class="nav-btn" data-tab="tab-root-match"><i class="fa-solid fa-puzzle-piece"></i> Ghép Từ Gốc</button>
-        <button class="nav-btn" data-tab="tab-quiz"><i class="fa-solid fa-graduation-cap"></i> Luyện Thi</button>
-        <button class="nav-btn" data-tab="tab-ai-dict"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Dict</button>
+        <button class="nav-btn active" data-tab="tab-dashboard" onclick="window.switchTab('tab-dashboard')"><i class="fa-solid fa-chart-pie"></i> Trang chủ</button>
+        <button class="nav-btn" data-tab="tab-dictionary" onclick="window.switchTab('tab-dictionary')"><i class="fa-solid fa-magnifying-glass"></i> Tra cứu</button>
+        <button class="nav-btn" data-tab="tab-flashcards" onclick="window.switchTab('tab-flashcards')"><i class="fa-solid fa-layer-group"></i> Thẻ ANKI</button>
+        <button class="nav-btn" data-tab="tab-root-match" onclick="window.switchTab('tab-root-match')"><i class="fa-solid fa-puzzle-piece"></i> Ghép Từ Gốc</button>
+        <button class="nav-btn" data-tab="tab-quiz" onclick="window.switchTab('tab-quiz')"><i class="fa-solid fa-graduation-cap"></i> Luyện Thi</button>
+        <button class="nav-btn" data-tab="tab-ai-dict" onclick="window.switchTab('tab-ai-dict')"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Dict</button>
       </nav>
 
       <div class="header-actions">
@@ -175,7 +175,7 @@
           <div class="score-badge"><i class="fa-solid fa-star" style="color:var(--accent-amber);"></i> Điểm: <strong id="game-score">0</strong></div>
           <div class="score-badge"><i class="fa-solid fa-fire" style="color:var(--accent-rose);"></i> Chuỗi: <strong id="game-combo">0</strong></div>
           
-          <button class="btn-toggle-hint" id="btn-toggle-hints">
+          <button class="btn-toggle-hint" id="btn-toggle-hints" onclick="window.toggleGameHints()">
             <i class="fa-solid fa-eye"></i> Bản dịch: <strong>Bật</strong>
           </button>
 
@@ -232,7 +232,7 @@
           </div>
 
           <div style="text-align:center; margin-top:2rem;">
-            <button class="btn-primary" id="btn-start-quiz" style="padding:0.9rem 2.5rem; font-size:1.1rem; max-width:320px; border-radius:var(--radius-md);">
+            <button class="btn-primary" id="btn-start-quiz" onclick="window.startNewQuizExam()" style="padding:0.9rem 2.5rem; font-size:1.1rem; max-width:320px; border-radius:var(--radius-md);">
               <i class="fa-solid fa-play"></i> Bắt Đầu Làm Bài Thi
             </button>
           </div>
@@ -263,7 +263,7 @@
 
         <div class="ai-search-bar">
           <input type="text" id="ai-search-input" placeholder="female reproductive system" value="female reproductive system">
-          <button id="btn-ai-search" class="btn-primary-ai">Tra cứu</button>
+          <button id="btn-ai-search" class="btn-primary-ai" onclick="window.performAiSearch()">Tra cứu</button>
         </div>
 
         <div id="ai-dict-response" class="ai-response-card">
@@ -276,22 +276,22 @@
 
   <!-- Mobile Bottom Navigation Bar -->
   <nav class="mobile-nav">
-    <button class="mobile-nav-btn active" data-tab="tab-dashboard">
+    <button class="mobile-nav-btn active" data-tab="tab-dashboard" onclick="window.switchTab('tab-dashboard')">
       <i class="fa-solid fa-house"></i><span>Trang chủ</span>
     </button>
-    <button class="mobile-nav-btn" data-tab="tab-dictionary">
+    <button class="mobile-nav-btn" data-tab="tab-dictionary" onclick="window.switchTab('tab-dictionary')">
       <i class="fa-solid fa-magnifying-glass"></i><span>Tra cứu</span>
     </button>
-    <button class="mobile-nav-btn" data-tab="tab-flashcards">
+    <button class="mobile-nav-btn" data-tab="tab-flashcards" onclick="window.switchTab('tab-flashcards')">
       <i class="fa-solid fa-layer-group"></i><span>Anki</span>
     </button>
-    <button class="mobile-nav-btn" data-tab="tab-root-match">
+    <button class="mobile-nav-btn" data-tab="tab-root-match" onclick="window.switchTab('tab-root-match')">
       <i class="fa-solid fa-puzzle-piece"></i><span>Ghép từ</span>
     </button>
-    <button class="mobile-nav-btn" data-tab="tab-quiz">
+    <button class="mobile-nav-btn" data-tab="tab-quiz" onclick="window.switchTab('tab-quiz')">
       <i class="fa-solid fa-graduation-cap"></i><span>Luyện thi</span>
     </button>
-    <button class="mobile-nav-btn" data-tab="tab-ai-dict">
+    <button class="mobile-nav-btn" data-tab="tab-ai-dict" onclick="window.switchTab('tab-ai-dict')">
       <i class="fa-solid fa-wand-magic-sparkles"></i><span>AI Dict</span>
     </button>
   </nav>

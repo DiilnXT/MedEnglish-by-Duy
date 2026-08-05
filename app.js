@@ -33,8 +33,23 @@ window.switchTab = function(tabId) {
   const navBtns = document.querySelectorAll('.nav-btn, .mobile-nav-btn');
   const tabContents = document.querySelectorAll('.tab-content');
   
-  navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
-  tabContents.forEach(p => p.classList.toggle('active', p.id === tabId));
+  navBtns.forEach(b => {
+    if (b.dataset.tab === tabId) {
+      b.classList.add('active');
+    } else {
+      b.classList.remove('active');
+    }
+  });
+  
+  tabContents.forEach(p => {
+    if (p.id === tabId) {
+      p.classList.add('active');
+      p.style.display = 'block';
+    } else {
+      p.classList.remove('active');
+      p.style.display = 'none';
+    }
+  });
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -89,7 +104,7 @@ window.renderSrsCard = function() {
           <i class="fa-solid fa-circle-check"></i> Hoàn thành bộ thẻ!
         </div>
         <div class="srs-complete-subtitle">
-          Bạn đã học xong tất cả thẻ trong <strong>"${escapeHtml(currentModName)}"</strong>. Chọn bước tiếp theo:
+          Bạn đã ôn tập xong tất cả thẻ trong <strong>"${escapeHtml(currentModName)}"</strong>. Chọn bước tiếp theo:
         </div>
 
         <div class="srs-complete-actions">
@@ -126,7 +141,7 @@ window.renderSrsCard = function() {
     <div class="flashcard" id="srs-card-el">
       <div class="f-front">
         <span class="hero-tag">${escapeHtml(item.module_name)}</span>
-        <h2 style="font-size:1.8rem; font-weight:800; margin:1rem 0;">${escapeHtml(item.term)}</h2>
+        <h2 style="font-size:1.8rem; font-weight:800; margin:1rem 0; color:var(--text-primary);">${escapeHtml(item.term)}</h2>
         <button class="btn-icon" style="margin:0 auto;" onclick="event.stopPropagation(); window.playAudio('${escapeJs(item.term)}')">
           <i class="fa-solid fa-volume-high"></i>
         </button>
@@ -136,14 +151,14 @@ window.renderSrsCard = function() {
         <h2 style="color:var(--accent-cyan); font-size:1.6rem;">${escapeHtml(item.term)}</h2>
         ${item.phonetic ? `<p style="font-family:var(--font-mono); color:var(--accent-cyan); margin-bottom:0.5rem;">${escapeHtml(item.phonetic)}</p>` : ''}
         <h3 style="color:var(--accent-emerald); font-size:1.3rem; margin-bottom:0.8rem;">${escapeHtml(item.vietnamese)}</h3>
-        ${item.note ? `<p style="color:var(--text-secondary); font-size:0.9rem; max-width:500px;">${escapeHtml(item.note)}</p>` : ''}
+        ${item.note ? `<p style="color:var(--text-secondary); font-size:0.9rem; max-width:500px; margin:0 auto;">${escapeHtml(item.note)}</p>` : ''}
       </div>
     </div>
   `;
 
   const el = document.getElementById('srs-card-el');
   if (el) {
-    el.addEventListener('click', () => {
+    el.onclick = function() {
       const f = el.querySelector('.f-front');
       const b = el.querySelector('.f-back');
       if (f && b) {
@@ -157,7 +172,7 @@ window.renderSrsCard = function() {
           el.classList.remove('flipped');
         }
       }
-    });
+    };
   }
 };
 
@@ -221,9 +236,9 @@ window.startRootMatchGame = function() {
       term: "HYPERTHYROIDISM",
       vietnamese: "Bệnh cường giáp (Tăng hoạt động tuyến giáp)",
       parts: [
-        { type: "prefix", text: "hyper-", hint: "Tiền tố: Tăng" },
+        { type: "prefix", text: "hyper-", hint: "Tiền tố: Tăng / Cường" },
         { type: "root", text: "thyroid", hint: "Gốc từ: Tuyến giáp" },
-        { type: "suffix", text: "-ism", hint: "Hậu tố: Bệnh lý" }
+        { type: "suffix", text: "-ism", hint: "Hậu tố: Bệnh lý / Tình trạng" }
       ]
     },
     {
@@ -285,6 +300,148 @@ window.startRootMatchGame = function() {
         { type: "root", text: "broncho-", hint: "Dạng kết hợp: Phế quản" },
         { type: "suffix", text: "-spasm", hint: "Hậu tố: Co thắt" }
       ]
+    },
+    {
+      term: "OSTEOARTHRITIS",
+      vietnamese: "Viêm xương khớp",
+      parts: [
+        { type: "root", text: "osteo-", hint: "Dạng kết hợp: Xương" },
+        { type: "root", text: "arthr-", hint: "Gốc từ: Khớp" },
+        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+      ]
+    },
+    {
+      term: "PERICARDITIS",
+      vietnamese: "Viêm màng ngoài tim",
+      parts: [
+        { type: "prefix", text: "peri-", hint: "Tiền tố: Xung quanh" },
+        { type: "root", text: "card-", hint: "Gốc từ: Tim" },
+        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+      ]
+    },
+    {
+      term: "THROMBOCYTOPENIA",
+      vietnamese: "Chứng giảm tiểu cầu",
+      parts: [
+        { type: "root", text: "thrombo-", hint: "Dạng kết hợp: Huyết khối" },
+        { type: "root", text: "cyto-", hint: "Dạng kết hợp: Tế bào" },
+        { type: "suffix", text: "-penia", hint: "Hậu tố: Giảm / Thiếu hụt" }
+      ]
+    },
+    {
+      term: "ENDOMETRIOSIS",
+      vietnamese: "Lạc nội mạc tử cung",
+      parts: [
+        { type: "prefix", text: "endo-", hint: "Tiền tố: Bên trong" },
+        { type: "root", text: "metri-", hint: "Gốc từ: Tử cung" },
+        { type: "suffix", text: "-osis", hint: "Hậu tố: Tình trạng bệnh lý" }
+      ]
+    },
+    {
+      term: "NEUROPATHY",
+      vietnamese: "Bệnh lý thần kinh",
+      parts: [
+        { type: "root", text: "neuro-", hint: "Dạng kết hợp: Thần kinh" },
+        { type: "suffix", text: "-pathy", hint: "Hậu tố: Bệnh lý" }
+      ]
+    },
+    {
+      term: "PNEUMOTHORAX",
+      vietnamese: "Tràn khí màng phổi",
+      parts: [
+        { type: "root", text: "pneumo-", hint: "Dạng kết hợp: Khí / Phổi" },
+        { type: "suffix", text: "-thorax", hint: "Hậu tố: Lồng ngực" }
+      ]
+    },
+    {
+      term: "CHOLECYSTITIS",
+      vietnamese: "Viêm túi mật",
+      parts: [
+        { type: "root", text: "cholecyst-", hint: "Gốc từ: Túi mật" },
+        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+      ]
+    },
+    {
+      term: "GASTROSTOMY",
+      vietnamese: "Phẫu thuật mở thông dạ dày",
+      parts: [
+        { type: "root", text: "gastro-", hint: "Dạng kết hợp: Dạ dày" },
+        { type: "suffix", text: "-stomy", hint: "Hậu tố: Mở thông" }
+      ]
+    },
+    {
+      term: "HYPERGLYCEMIA",
+      vietnamese: "Tăng đường huyết",
+      parts: [
+        { type: "prefix", text: "hyper-", hint: "Tiền tố: Tăng / Cường" },
+        { type: "root", text: "glyc-", hint: "Gốc từ: Đường" },
+        { type: "suffix", text: "-emia", hint: "Hậu tố: Tình trạng máu" }
+      ]
+    },
+    {
+      term: "ELECTROENCEPHALOGRAM",
+      vietnamese: "Điện não đồ (Bản ghi hoạt động điện não)",
+      parts: [
+        { type: "prefix", text: "electro-", hint: "Tiền tố: Điện" },
+        { type: "root", text: "encephalo-", hint: "Dạng kết hợp: Não" },
+        { type: "suffix", text: "-gram", hint: "Hậu tố: Bản ghi" }
+      ]
+    },
+    {
+      term: "ARTERIOSCLEROSIS",
+      vietnamese: "Chứng xơ cứng động mạch",
+      parts: [
+        { type: "root", text: "arterio-", hint: "Dạng kết hợp: Động mạch" },
+        { type: "suffix", text: "-sclerosis", hint: "Hậu tố: Xơ cứng" }
+      ]
+    },
+    {
+      term: "HYSTERECTOMY",
+      vietnamese: "Phẫu thuật cắt tử cung",
+      parts: [
+        { type: "root", text: "hyster-", hint: "Gốc từ: Tử cung" },
+        { type: "suffix", text: "-ectomy", hint: "Hậu tố: Phẫu thuật cắt bỏ" }
+      ]
+    },
+    {
+      term: "DERMATOSCLEROSIS",
+      vietnamese: "Chứng xơ cứng bì (da)",
+      parts: [
+        { type: "root", text: "dermato-", hint: "Dạng kết hợp: Da" },
+        { type: "suffix", text: "-sclerosis", hint: "Hậu tố: Xơ cứng" }
+      ]
+    },
+    {
+      term: "TRACHEOSTOMY",
+      vietnamese: "Phẫu thuật mở thông khí quản",
+      parts: [
+        { type: "root", text: "tracheo-", hint: "Dạng kết hợp: Khí quản" },
+        { type: "suffix", text: "-stomy", hint: "Hậu tố: Mở thông" }
+      ]
+    },
+    {
+      term: "HEPATITIS",
+      vietnamese: "Viêm gan",
+      parts: [
+        { type: "root", text: "hepat-", hint: "Gốc từ: Gan" },
+        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+      ]
+    },
+    {
+      term: "ARTHROCENTESIS",
+      vietnamese: "Chọc dò khớp hút dịch",
+      parts: [
+        { type: "root", text: "arthro-", hint: "Dạng kết hợp: Khớp" },
+        { type: "suffix", text: "-centesis", hint: "Hậu tố: Chọc dò rút dịch" }
+      ]
+    },
+    {
+      term: "SPLENOMEGALY",
+      vietnamese: "Chứng lách to",
+      parts: [
+        { type: "root", text: "spleno-", hint: "Dạng kết hợp: Lách" },
+        { type: "suffix", text: "-megaly", hint: "Hậu tố: Phì đại / To" }
+      ]
     }
   ];
 
@@ -309,7 +466,7 @@ window.renderGameStage = function() {
     </div>
 
     <div style="text-align:center; font-size:0.85rem; color:var(--text-secondary); margin-bottom:8px;">
-      <i class="fa-solid fa-arrow-down"></i> Nhấp các mảnh căn tố bên dưới để ghép:
+      <i class="fa-solid fa-arrow-down"></i> Nhấp các mảnh căn tố bên dưới để ghép (Bấm vào mảnh ở ô trên để bỏ chọn):
     </div>
 
     <div class="assembly-drop-zone" id="drop-zone">
@@ -318,7 +475,7 @@ window.renderGameStage = function() {
 
     <div class="assembly-pool" id="assembly-pool">
       ${shuffledParts.map((p, idx) => `
-        <button class="part-card ${p.type}" onclick="window.selectPart(${idx}, '${escapeJs(p.text)}')">
+        <button class="part-card ${p.type}" id="pool-part-${idx}" onclick="window.selectPart(${idx}, '${escapeJs(p.text)}')">
           <span>${escapeHtml(p.text)}</span>
           ${state.showGameHints ? `<small style="font-size:0.7rem; opacity:0.85;">(${escapeHtml(p.hint)})</small>` : ''}
         </button>
@@ -335,7 +492,15 @@ window.renderGameStage = function() {
 };
 
 window.selectPart = function(idx, text) {
-  state.selectedParts.push(text);
+  const poolBtn = document.getElementById(`pool-part-${idx}`);
+  if (poolBtn && poolBtn.classList.contains('selected-part')) return;
+
+  state.selectedParts.push({ idx, text });
+
+  if (poolBtn) {
+    poolBtn.classList.add('selected-part');
+  }
+
   const dropZone = document.getElementById('drop-zone');
   const placeholder = document.getElementById('drop-placeholder');
   if (placeholder) placeholder.remove();
@@ -343,9 +508,29 @@ window.selectPart = function(idx, text) {
   if (dropZone) {
     const card = document.createElement('div');
     card.className = 'part-card root';
+    card.id = `dropped-part-${idx}`;
     card.style.background = 'linear-gradient(135deg, #3b82f6, #06b6d4)';
-    card.textContent = text;
+    card.innerHTML = `<span>${escapeHtml(text)}</span> <i class="fa-solid fa-xmark" style="font-size:0.75rem; margin-left:4px; opacity:0.8;"></i>`;
+    card.title = 'Bấm để bỏ chọn mảnh này';
+    card.onclick = () => window.deselectPart(idx, text);
     dropZone.appendChild(card);
+  }
+};
+
+window.deselectPart = function(idx, text) {
+  state.selectedParts = state.selectedParts.filter(p => p.idx !== idx);
+
+  const droppedCard = document.getElementById(`dropped-part-${idx}`);
+  if (droppedCard) droppedCard.remove();
+
+  const poolBtn = document.getElementById(`pool-part-${idx}`);
+  if (poolBtn) {
+    poolBtn.classList.remove('selected-part');
+  }
+
+  const dropZone = document.getElementById('drop-zone');
+  if (dropZone && state.selectedParts.length === 0) {
+    dropZone.innerHTML = '<span style="color:var(--text-muted); font-size:0.9rem;" id="drop-placeholder">Chưa chọn thành phần nào...</span>';
   }
 };
 
@@ -353,8 +538,14 @@ window.checkAssemblyAnswer = function() {
   const feedback = document.getElementById('assembly-feedback');
   if (!state.currentMatchTarget || !feedback) return;
 
-  const assembled = state.selectedParts.join('').replace(/-/g, '').toUpperCase();
+  const assembled = state.selectedParts.map(p => p.text).join('').replace(/-/g, '').toUpperCase();
   const correctClean = state.currentMatchTarget.term.replace(/-/g, '').toUpperCase();
+
+  if (assembled.length === 0) {
+    feedback.style.color = 'var(--accent-amber)';
+    feedback.innerHTML = '⚠️ Bạn chưa chọn mảnh ghép nào!';
+    return;
+  }
 
   if (assembled === correctClean) {
     state.gameScore += 10;
@@ -368,14 +559,14 @@ window.checkAssemblyAnswer = function() {
     feedback.innerHTML = `🎉 CHÍNH XÁC! <strong>${state.currentMatchTarget.term}</strong> = ${escapeHtml(state.currentMatchTarget.vietnamese)}`;
     window.playAudio(state.currentMatchTarget.term);
 
-    setTimeout(() => window.startRootMatchGame(), 2000);
+    setTimeout(() => window.startRootMatchGame(), 1800);
   } else {
     state.gameCombo = 0;
     const comboEl = document.getElementById('game-combo');
     if (comboEl) comboEl.textContent = 0;
 
     feedback.style.color = 'var(--accent-rose)';
-    feedback.innerHTML = `❌ Chưa đúng! Bạn đã ghép: "${assembled}". Hãy thử lại!`;
+    feedback.innerHTML = `❌ Chưa đúng! Bạn đã ghép: "<strong>${escapeHtml(assembled)}</strong>". Hãy thử lại!`;
   }
 };
 
@@ -389,15 +580,10 @@ window.startNewQuizExam = function() {
   const shuffledPool = [...QUIZ_DATA].sort(() => Math.random() - 0.5);
   const selected30 = shuffledPool.slice(0, 30);
 
-  state.quizQuestions = selected30.map((q, idx) => {
-    const optionsCopy = [...q.options];
-    const shuffledOpts = optionsCopy.sort(() => Math.random() - 0.5);
-    return {
-      ...q,
-      quizIndex: idx + 1,
-      shuffledOptions: shuffledOpts
-    };
-  });
+  state.quizQuestions = selected30.map((q, idx) => ({
+    ...q,
+    quizIndex: idx + 1
+  }));
 
   state.quizUserAnswers = {};
   state.quizCurrentIndex = 0;
@@ -429,9 +615,9 @@ window.startQuizTimer = function() {
       const formatted = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
       timerEl.textContent = formatted;
 
-      if (state.quizTimeLeft <= 180) {
+      if (state.quizTimeLeft <= 180 && timerEl.parentElement) {
         timerEl.parentElement.classList.add('urgent');
-      } else {
+      } else if (timerEl.parentElement) {
         timerEl.parentElement.classList.remove('urgent');
       }
     }
@@ -472,9 +658,7 @@ window.renderQuizQuestion = function() {
     </div>
 
     <div class="quiz-options">
-      ${q.shuffledOptions.map((opt, optIdx) => {
-        const keys = ['A', 'B', 'C', 'D'];
-        const optLabelKey = keys[optIdx];
+      ${q.options.map((opt) => {
         const isSelected = userSelectedKey === opt.key;
         
         let btnClass = 'quiz-opt-btn';
@@ -490,7 +674,7 @@ window.renderQuizQuestion = function() {
 
         return `
           <button class="${btnClass}" onclick="window.selectQuizAnswer(${state.quizCurrentIndex}, '${escapeJs(opt.key)}')">
-            <span class="quiz-opt-key">${optLabelKey}</span>
+            <span class="quiz-opt-key">${escapeHtml(opt.key)}</span>
             <span>${escapeHtml(opt.text)}</span>
           </button>
         `;
@@ -499,10 +683,10 @@ window.renderQuizQuestion = function() {
 
     ${isInstantMode && userSelectedKey ? `
       <div class="quiz-explanation-box">
-        <strong style="color:var(--accent-emerald);">
-          ${userSelectedKey === q.correctKey ? '🎉 Đúng!' : '❌ Chưa đúng!'} Đáp án đúng là phương án chứa: "${escapeHtml(q.options.find(o=>o.key===q.correctKey).text)}"
+        <strong style="color:${userSelectedKey === q.correctKey ? 'var(--accent-emerald)' : 'var(--accent-rose)'}; display:block; margin-bottom:4px;">
+          ${userSelectedKey === q.correctKey ? '🎉 Đúng!' : '❌ Chưa đúng!'} Đáp án đúng là phương án ${escapeHtml(q.correctKey)}: "${escapeHtml((q.options.find(o=>o.key===q.correctKey)||{}).text)}"
         </strong>
-        ${q.explanation ? `<p style="margin-top:6px; color:var(--text-secondary);">${escapeHtml(q.explanation)}</p>` : ''}
+        ${q.explanation ? `<p style="margin-top:4px; color:var(--text-secondary);">${escapeHtml(q.explanation)}</p>` : ''}
       </div>
     ` : ''}
 
@@ -625,12 +809,12 @@ window.submitQuizExam = function() {
             <span class="big-val">${correctCount}/30</span>
             <span class="percent">${percent}%</span>
           </div>
-          <h3 style="font-size:1.3rem; margin-bottom:0.4rem;">${badgeText}</h3>
+          <h3 style="font-size:1.3rem; margin-bottom:0.4rem; color:var(--text-primary);">${badgeText}</h3>
           <p style="color:var(--text-secondary); font-size:0.9rem;">Thời gian làm bài: <strong>${timeFormatted}</strong></p>
         </div>
 
         <div style="display:flex; justify-content:center; gap:12px; margin:1.5rem 0 2rem 0; flex-wrap:wrap;">
-          <button class="btn-primary" style="max-width:260px;" onclick="window.startNewQuizExam()">
+          <button class="btn-primary" style="max-width:280px;" onclick="window.startNewQuizExam()">
             <i class="fa-solid fa-rotate-right"></i> Làm bài thi mới (30 câu ngẫu nhiên)
           </button>
           <button class="btn-secondary" style="max-width:200px;" onclick="window.resetQuizToStart()">
@@ -639,7 +823,7 @@ window.submitQuizExam = function() {
         </div>
 
         <div style="border-top:1px solid var(--border-color); padding-top:1.5rem;">
-          <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:1rem;">
+          <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:1rem; color:var(--text-primary);">
             <i class="fa-solid fa-list-check"></i> Chi Tiết 30 Câu Hỏi Bài Thi:
           </h3>
 
@@ -651,25 +835,25 @@ window.submitQuizExam = function() {
 
             return `
               <div class="quiz-review-item ${isCorrect ? 'is-correct' : 'is-wrong'}">
-                <div style="font-weight:700; font-size:1rem; margin-bottom:0.5rem; color:#fff;">
+                <div style="font-weight:700; font-size:1rem; margin-bottom:0.5rem; color:var(--text-primary);">
                   Câu ${idx + 1}: ${escapeHtml(q.question)}
                 </div>
 
-                <div style="font-size:0.9rem; margin-bottom:0.3rem;">
+                <div style="font-size:0.9rem; margin-bottom:0.3rem; color:var(--text-primary);">
                   Lựa chọn của bạn: 
                   <strong style="color:${isCorrect ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">
-                    ${userOptObj ? escapeHtml(userOptObj.text) : '(Bỏ trống)'}
+                    ${userOptObj ? `${escapeHtml(userOptObj.key)}. ${escapeHtml(userOptObj.text)}` : '(Bỏ trống)'}
                   </strong>
                 </div>
 
                 ${!isCorrect ? `
                   <div style="font-size:0.9rem; color:var(--accent-emerald); margin-bottom:0.3rem;">
-                    Đáp án đúng: <strong>${escapeHtml(correctOptObj ? correctOptObj.text : '')}</strong>
+                    Đáp án đúng: <strong>${escapeHtml(correctOptObj ? `${correctOptObj.key}. ${correctOptObj.text}` : '')}</strong>
                   </div>
                 ` : ''}
 
                 ${q.explanation ? `
-                  <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:0.4rem; background:rgba(0,0,0,0.2); padding:0.5rem 0.8rem; border-radius:var(--radius-sm);">
+                  <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:0.4rem; background:rgba(0,0,0,0.15); padding:0.5rem 0.8rem; border-radius:var(--radius-sm);">
                     <i class="fa-solid fa-lightbulb"></i> Giải thích: ${escapeHtml(q.explanation)}
                   </div>
                 ` : ''}
@@ -737,7 +921,7 @@ English: "[Clinical sentence in English]"
 Vietnamese: "[Translation in Vietnamese]"
 
 4. Word Analysis & Related Medical Roots (Phân tích từ vựng & Căn tố y khoa)
-While "${q}" uses standard English terms, medical terminology frequently uses Greek and Latin roots to describe specific parts of this system:
+While "${q}" uses standard English terms, medical terminology frequently uses Greek and Latin roots:
 - [Root 1]: Example: ...
 - [Root 2]: Example: ...
 
@@ -755,7 +939,7 @@ Good luck with your medical studies! Feel free to ask if you need further clarif
     if (text) {
       responseBox.innerHTML = `<div class="ai-result-content">${formatMarkdownText(text)}</div>`;
     } else {
-      throw new Error('Lỗi dữ liệu từ Gemini.');
+      throw new Error('Lỗi dữ liệu từ Gemini API.');
     }
   } catch (err) {
     responseBox.innerHTML = renderAiCardFormat(q, localMatch, true, err.message);
@@ -763,50 +947,56 @@ Good luck with your medical studies! Feel free to ask if you need further clarif
 };
 
 function formatMarkdownText(text) {
-  return text
+  let formatted = escapeHtml(text)
     .replace(/Hello! Here is the explanation/g, '<div class="ai-greeting">Hello! Here is the explanation')
     .replace(/prepared for your studies\./g, 'prepared for your studies.</div>')
-    .replace(/Phonetic:\s*(.*)/g, '<div class="ai-phonetic">Phonetic: $1</div>')
-    .replace(/1\. Meaning in Vietnamese \(Nghĩa tiếng Việt\)/g, '<div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-language"></i> 1. Meaning in Vietnamese (Nghĩa tiếng Việt)</div><div class="ai-section-content">')
-    .replace(/2\. Meaning in English/g, '</div></div><div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-book"></i> 2. Meaning in English</div><div class="ai-section-content">')
-    .replace(/3\. Clinical Example \(Ví dụ lâm sàng\)/g, '</div></div><div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-stethoscope"></i> 3. Clinical Example (Ví dụ lâm sàng)</div><div class="ai-section-content">')
-    .replace(/4\. Word Analysis & Related Medical Roots \(Phân tích từ vựng & Căn tố y khoa\)/g, '</div></div><div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-dna"></i> 4. Word Analysis & Related Medical Roots (Phân tích từ vựng & Căn tố y khoa)</div><div class="ai-section-content">')
-    .replace(/Good luck with your medical studies!/g, '</div></div><div class="ai-footer-note">Good luck with your medical studies!')
+    .replace(/Phonetic:\s*(.*)/g, '<div class="ai-phonetic" style="font-family:var(--font-mono); color:var(--accent-cyan); margin:0.5rem 0;">Phonetic: $1</div>')
+    .replace(/1\. Meaning in Vietnamese \(Nghĩa tiếng Việt\)/g, '<div class="ai-section" style="margin-top:1rem;"><div class="ai-section-title" style="font-weight:700; color:var(--accent-emerald);"><i class="fa-solid fa-language"></i> 1. Meaning in Vietnamese (Nghĩa tiếng Việt)</div><div class="ai-section-content">')
+    .replace(/2\. Meaning in English/g, '</div></div><div class="ai-section" style="margin-top:1rem;"><div class="ai-section-title" style="font-weight:700; color:var(--accent-cyan);"><i class="fa-solid fa-book"></i> 2. Meaning in English</div><div class="ai-section-content">')
+    .replace(/3\. Clinical Example \(Ví dụ lâm sàng\)/g, '</div></div><div class="ai-section" style="margin-top:1rem;"><div class="ai-section-title" style="font-weight:700; color:var(--accent-amber);"><i class="fa-solid fa-stethoscope"></i> 3. Clinical Example (Ví dụ lâm sàng)</div><div class="ai-section-content">')
+    .replace(/4\. Word Analysis & Related Medical Roots \(Phân tích từ vựng & Căn tố y khoa\)/g, '</div></div><div class="ai-section" style="margin-top:1rem;"><div class="ai-section-title" style="font-weight:700; color:var(--accent-purple);"><i class="fa-solid fa-dna"></i> 4. Word Analysis & Related Medical Roots (Phân tích từ vựng & Căn tố y khoa)</div><div class="ai-section-content">')
+    .replace(/Good luck with your medical studies!/g, '</div></div><div class="ai-footer-note" style="margin-top:1rem; font-style:italic; color:var(--text-secondary);">Good luck with your medical studies!')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/
-/g, '<br>');
+    .replace(/\n/g, '<br>');
+  return formatted;
 }
 
 function renderAiCardFormat(q, localMatch, isError = false, errMsg = '') {
   const termTitle = localMatch ? localMatch.term : q;
-  const phonetic = localMatch ? localMatch.phonetic : '/fee-meyl ree-pruh-duhk-tiv sis-tuh m/';
+  const phonetic = localMatch ? (localMatch.phonetic || '/fee-meyl ree-pruh-duhk-tiv sis-tuh m/') : '/fee-meyl ree-pruh-duhk-tiv sis-tuh m/';
   const vi = localMatch ? localMatch.vietnamese : 'Hệ sinh sản nữ / Thuật ngữ Y khoa';
   const note = localMatch ? localMatch.note : 'Cơ quan sinh dục trong và ngoài phụ trách chức năng sinh sản.';
 
   return `
     <div class="ai-result-content">
       ${isError ? `<div style="color:var(--accent-rose); margin-bottom:12px;"><i class="fa-solid fa-triangle-exclamation"></i> Lỗi Gemini API: ${escapeHtml(errMsg)}. Hiển thị dữ liệu local:</div>` : ''}
-      <div class="ai-greeting">Hello! Here is the explanation of the medical term "${escapeHtml(termTitle)}" prepared for your studies.</div>
+      <div class="ai-greeting" style="font-style:italic; color:var(--text-secondary); margin-bottom:0.8rem;">
+        Hello! Here is the explanation of the medical term "${escapeHtml(termTitle)}" prepared for your studies.
+      </div>
       
-      <h2 style="font-size:1.5rem; font-weight:800; color:#fff;">${escapeHtml(termTitle)}</h2>
-      <div class="ai-phonetic">Phonetic: ${escapeHtml(phonetic)}</div>
+      <h2 style="font-size:1.5rem; font-weight:800; color:var(--text-primary);">${escapeHtml(termTitle)}</h2>
+      <div class="ai-phonetic" style="font-family:var(--font-mono); color:var(--accent-cyan); margin:0.3rem 0 1rem 0;">Phonetic: ${escapeHtml(phonetic)}</div>
 
-      <div class="ai-section">
-        <div class="ai-section-title"><i class="fa-solid fa-language"></i> 1. Meaning in Vietnamese (Nghĩa tiếng Việt)</div>
-        <div class="ai-section-content">
-          <p><strong>${escapeHtml(vi)}</strong></p>
-          <p>${escapeHtml(note)}</p>
+      <div class="ai-section" style="margin-bottom:1.2rem;">
+        <div class="ai-section-title" style="font-weight:700; color:var(--accent-emerald); margin-bottom:0.4rem;">
+          <i class="fa-solid fa-language"></i> 1. Meaning in Vietnamese (Nghĩa tiếng Việt)
+        </div>
+        <div class="ai-section-content" style="padding-left:0.5rem;">
+          <p style="font-size:1.05rem; font-weight:700; color:var(--accent-emerald);">${escapeHtml(vi)}</p>
+          <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.2rem;">${escapeHtml(note)}</p>
         </div>
       </div>
 
-      <div class="ai-section">
-        <div class="ai-section-title"><i class="fa-solid fa-book"></i> 2. Meaning in English</div>
-        <div class="ai-section-content">
+      <div class="ai-section" style="margin-bottom:1.2rem;">
+        <div class="ai-section-title" style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.4rem;">
+          <i class="fa-solid fa-book"></i> 2. Meaning in English
+        </div>
+        <div class="ai-section-content" style="padding-left:0.5rem;">
           <p>The ensemble of anatomical organs and structures in medical terminology representing ${escapeHtml(termTitle)}.</p>
         </div>
       </div>
 
-      <div class="ai-footer-note">
+      <div class="ai-footer-note" style="border-top:1px solid var(--border-color); padding-top:0.8rem; font-size:0.85rem; color:var(--text-muted);">
         <p><i class="fa-solid fa-key"></i> Bấm biểu tượng chìa khóa ở góc trên để dán API Key & trải nghiệm AI Gemini trực tiếp!</p>
       </div>
     </div>
@@ -826,7 +1016,7 @@ window.openTermModal = function(item) {
         <h4 style="font-size:1.2rem; color:var(--accent-emerald); margin-top:4px;">${escapeHtml(item.vietnamese)}</h4>
       </div>
       ${item.note ? `<p style="color:var(--text-secondary); margin-bottom:16px;">${escapeHtml(item.note)}</p>` : ''}
-      <div style="display:flex; gap:10px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button class="btn-primary" onclick="window.playAudio('${escapeJs(item.term)}')"><i class="fa-solid fa-volume-high"></i> Phát âm</button>
         <button class="btn-secondary" onclick="window.closeTermModal(); window.openAiTerm('${escapeJs(item.term)}');"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Tra cứu</button>
       </div>
@@ -858,16 +1048,20 @@ window.renderStats = function() {
 
 function escapeHtml(s) {
   if (!s) return '';
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function escapeJs(s) {
   if (!s) return '';
-  return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+  return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
 }
 
 // MAIN INITIALIZATION ON DOM LOADED
 document.addEventListener('DOMContentLoaded', () => {
+  // Saved Theme
+  const savedTheme = localStorage.getItem('medterm_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
   // Elements
   const elements = {
     navBtns: document.querySelectorAll('.nav-btn, .mobile-nav-btn'),
@@ -897,6 +1091,10 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle: document.getElementById('theme-toggle'),
     srsModuleSelect: document.getElementById('srs-module-select')
   };
+
+  if (elements.themeToggle) {
+    elements.themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+  }
 
   function updateApiStatus() {
     if (elements.apiStatusDot) {
@@ -960,7 +1158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filtered = state.terms.filter(t => {
       const mMod = mod === 'all' || t.module === mod;
-      const mQ = !q || t.term.toLowerCase().includes(q) || t.vietnamese.toLowerCase().includes(q) || t.note.toLowerCase().includes(q);
+      const mQ = !q || t.term.toLowerCase().includes(q) || (t.vietnamese || '').toLowerCase().includes(q) || (t.note || '').toLowerCase().includes(q);
       return mMod && mQ;
     });
 
@@ -1021,6 +1219,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const curr = document.documentElement.getAttribute('data-theme');
       const next = curr === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
+      elements.themeToggle.innerHTML = next === 'dark' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+      localStorage.setItem('medterm_theme', next);
     });
   }
 
@@ -1086,6 +1286,22 @@ document.addEventListener('DOMContentLoaded', () => {
       if (elements.modalApiConfig) elements.modalApiConfig.classList.remove('active');
     });
   }
+
+  // Close modals on overlay backdrop click
+  document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  });
+
+  // ESC key to close active modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+    }
+  });
 
   if (elements.btnToggleKeyVis) {
     elements.btnToggleKeyVis.addEventListener('click', () => {
@@ -1157,4 +1373,5 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initSrs();
   window.updateHintToggleButton();
   window.startRootMatchGame();
+  window.performAiSearch();
 });
