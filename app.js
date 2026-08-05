@@ -17,7 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
     gameScore: 0,
     gameCombo: 0,
     currentMatchTarget: null,
-    selectedParts: []
+    selectedParts: [],
+    showGameHints: localStorage.getItem('medterm_game_hints') !== 'false',
+    // Quiz State
+    quizMode: 'end_feedback', // 'end_feedback' or 'instant_feedback'
+    quizQuestions: [],
+    quizUserAnswers: {}, // { qIndex: 'A'/'B'/'C'/'D' }
+    quizCurrentIndex: 0,
+    quizTimerInterval: null,
+    quizTimeLeft: 15 * 60, // 15 minutes in seconds
+    quizSubmitted: false
   };
 
   // DOM Elements
@@ -43,10 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
     assemblyStage: document.getElementById('assembly-stage'),
     gameScore: document.getElementById('game-score'),
     gameCombo: document.getElementById('game-combo'),
+    btnToggleHints: document.getElementById('btn-toggle-hints'),
     // AI Dict
     aiSearchInput: document.getElementById('ai-search-input'),
     btnAiSearch: document.getElementById('btn-ai-search'),
     aiDictResponse: document.getElementById('ai-dict-response'),
+    // Quiz
+    quizStartScreen: document.getElementById('quiz-start-screen'),
+    quizExamScreen: document.getElementById('quiz-exam-screen'),
+    quizResultScreen: document.getElementById('quiz-result-screen'),
+    btnStartQuiz: document.getElementById('btn-start-quiz'),
     // API Modal
     btnApiModal: document.getElementById('btn-api-modal'),
     modalApiConfig: document.getElementById('modal-api-config'),
@@ -73,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDictionary();
     renderStats();
     initSrs();
+    updateHintToggleButton();
     startRootMatchGame();
     setupEventListeners();
   }
@@ -116,11 +132,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // SRS Filter
     elements.srsModuleSelect.addEventListener('change', initSrs);
 
+    // Root Game Toggle Hints
+    if (elements.btnToggleHints) {
+      elements.btnToggleHints.addEventListener('click', toggleGameHints);
+    }
+
     // AI Search
     elements.btnAiSearch.addEventListener('click', performAiSearch);
     elements.aiSearchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') performAiSearch();
     });
+
+    // Quiz Mode Choice Cards
+    document.querySelectorAll('.quiz-mode-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.quiz-mode-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        state.quizMode = card.dataset.mode;
+      });
+    });
+
+    // Quiz Start Button
+    if (elements.btnStartQuiz) {
+      elements.btnStartQuiz.addEventListener('click', startNewQuizExam);
+    }
 
     // API Modal Events
     elements.btnApiModal.addEventListener('click', () => {
@@ -212,7 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
       cau_tao: 'fa-cubes', goc_tu: 'fa-tree', nguon_goc: 'fa-monument',
       dang_ket_hop: 'fa-link', hau_to: 'fa-tag', tien_to: 'fa-tags',
       phien_am: 'fa-volume-high', tong_quan: 'fa-child', tim_mach: 'fa-heart-pulse',
-      ho_hap: 'fa-lungs', tieu_hoa: 'fa-apple-whole', than_kinh: 'fa-brain', sinh_san_nu: 'fa-venus'
+      ho_hap: 'fa-lungs', tieu_hoa: 'fa-apple-whole', than_kinh: 'fa-brain', sinh_san_nu: 'fa-venus',
+      izone_suc_khoe: 'fa-heart-pulse', izone_benh_ly: 'fa-virus', izone_chuyen_khoa: 'fa-user-doctor',
+      izone_benh_vien: 'fa-hospital', izone_thuoc_thiet_bi: 'fa-pills', izone_viet_tat_thu_y: 'fa-stethoscope'
     };
 
     state.modules.forEach(([id, name]) => {
@@ -224,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="module-card-icon"><i class="fa-solid ${icon}"></i></div>
         <div class="module-card-info">
-          <h4>${name}</h4>
+          <h4>${escapeHtml(name)}</h4>
           <span>${count} Thuật ngữ & Dữ liệu</span>
         </div>
       `;
@@ -291,10 +328,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderSrsCard() {
-    if (!state.srsQueue || state.srsQueue.length === 0) {
+    if (!state.srsQueue || state.srsQueue.length === 0 || state.currentSrsIndex >= state.srsQueue.length) {
+      const currentModId = elements.srsModuleSelect.value;
+      const currentModObj = state.modules.find(m => m[0] === currentModId);
+      const currentModName = currentModObj ? currentModObj[1] : 'Tất cả bài học';
+
       elements.srsCardWrapper.innerHTML = `
-        <div class="flashcard">
-          <h3 style="color:var(--accent-emerald);"><i class="fa-solid fa-circle-check"></i> Hoàn thành bộ thẻ!</h3>
+        <div class="srs-complete-card">
+          <div class="srs-complete-title">
+            <i class="fa-solid fa-circle-check"></i> Hoàn thành bộ thẻ!
+          </div>
+          <div class="srs-complete-subtitle">
+            Bạn đã ôn tập xong tất cả thẻ trong <strong>"${escapeHtml(currentModName)}"</strong>. Chọn bước tiếp theo:
+          </div>
+
+          <div class="srs-complete-actions">
+            <button class="btn-primary" onclick="restartCurrentSrsChapter()">
+              <i class="fa-solid fa-rotate-left"></i> Học lại chương này (${state.srsQueue.length} thẻ)
+            </button>
+            <button class="btn-secondary" onclick="startAllSrsChapters()">
+              <i class="fa-solid fa-layer-group"></i> Học tất cả các chương (${state.terms.length} thẻ)
+            </button>
+          </div>
+
+          <div class="srs-module-picker-heading">
+            <i class="fa-solid fa-book"></i> Hoặc chọn học lại một chương bất kỳ:
+          </div>
+
+          <div class="srs-module-grid">
+            ${state.modules.map(([id, name]) => {
+              const cnt = state.terms.filter(t => t.module === id).length;
+              return `
+                <button class="srs-mod-btn" onclick="selectSrsChapter('${escapeJs(id)}')">
+                  <span>${escapeHtml(name)}</span>
+                  <span class="badge-cnt">${cnt} thẻ</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
         </div>
       `;
       return;
@@ -337,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.rateCard = function(score) {
-    if (!state.srsQueue || state.srsQueue.length === 0) return;
+    if (!state.srsQueue || state.srsQueue.length === 0 || state.currentSrsIndex >= state.srsQueue.length) return;
     const item = state.srsQueue[state.currentSrsIndex];
     const srs = state.srsData[item.id] || { level: 0 };
 
@@ -347,12 +418,44 @@ document.addEventListener('DOMContentLoaded', () => {
     state.srsData[item.id] = srs;
     localStorage.setItem('medterm_srs', JSON.stringify(state.srsData));
 
-    state.currentSrsIndex = (state.currentSrsIndex + 1) % state.srsQueue.length;
+    state.currentSrsIndex++;
     renderStats();
     renderSrsCard();
   };
 
-  // --- INSANELY BEAUTIFUL ROOT MATCHING GAME ---
+  window.restartCurrentSrsChapter = function() {
+    state.currentSrsIndex = 0;
+    renderSrsCard();
+  };
+
+  window.startAllSrsChapters = function() {
+    elements.srsModuleSelect.value = 'all';
+    initSrs();
+  };
+
+  window.selectSrsChapter = function(modId) {
+    elements.srsModuleSelect.value = modId;
+    initSrs();
+  };
+
+  // --- ROOT MATCHING GAME ---
+  function updateHintToggleButton() {
+    if (elements.btnToggleHints) {
+      elements.btnToggleHints.innerHTML = state.showGameHints ? 
+        '<i class="fa-solid fa-eye"></i> Bản dịch: <strong>Bật</strong>' : 
+        '<i class="fa-solid fa-eye-slash"></i> Bản dịch: <strong>Tắt</strong>';
+    }
+  }
+
+  function toggleGameHints() {
+    state.showGameHints = !state.showGameHints;
+    localStorage.setItem('medterm_game_hints', state.showGameHints ? 'true' : 'false');
+    updateHintToggleButton();
+    if (state.currentMatchTarget) {
+      renderGameStage();
+    }
+  }
+
   window.startRootMatchGame = function() {
     state.selectedParts = [];
 
@@ -408,11 +511,35 @@ document.addEventListener('DOMContentLoaded', () => {
           { type: "root", text: "hepato-", hint: "Dạng kết hợp: Gan" },
           { type: "suffix", text: "-megaly", hint: "Hậu tố: Phì đại / To" }
         ]
+      },
+      {
+        term: "NEPHROLITHIASIS",
+        vietnamese: "Bệnh sỏi thận",
+        parts: [
+          { type: "root", text: "nephro-", hint: "Dạng kết hợp: Thận" },
+          { type: "root", text: "lith-", hint: "Gốc từ: Sỏi" },
+          { type: "suffix", text: "-iasis", hint: "Hậu tố: Tình trạng bệnh" }
+        ]
+      },
+      {
+        term: "BRONCHOSPASM",
+        vietnamese: "Co thắt phế quản",
+        parts: [
+          { type: "root", text: "broncho-", hint: "Dạng kết hợp: Phế quản" },
+          { type: "suffix", text: "-spasm", hint: "Hậu tố: Co thắt" }
+        ]
       }
     ];
 
     const target = structuredPool[Math.floor(Math.random() * structuredPool.length)];
     state.currentMatchTarget = target;
+
+    renderGameStage();
+  };
+
+  function renderGameStage() {
+    const target = state.currentMatchTarget;
+    if (!target) return;
 
     const shuffledParts = [...target.parts].sort(() => Math.random() - 0.5);
 
@@ -434,19 +561,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ${shuffledParts.map((p, idx) => `
           <button class="part-card ${p.type}" onclick="selectPart(${idx}, '${escapeJs(p.text)}')">
             <span>${escapeHtml(p.text)}</span>
-            <small style="font-size:0.7rem; opacity:0.85;">(${escapeHtml(p.hint)})</small>
+            ${state.showGameHints ? `<small style="font-size:0.7rem; opacity:0.85;">(${escapeHtml(p.hint)})</small>` : ''}
           </button>
         `).join('')}
       </div>
 
-      <div style="display:flex; justify-content:center; gap:12px; margin-top:1.5rem;">
+      <div style="display:flex; justify-content:center; gap:12px; margin-top:1.5rem; flex-wrap:wrap;">
         <button class="btn-primary" style="max-width:180px;" onclick="checkAssemblyAnswer()"><i class="fa-solid fa-check"></i> Kiểm tra</button>
         <button class="btn-secondary" style="max-width:180px;" onclick="startRootMatchGame()"><i class="fa-solid fa-rotate-left"></i> Đổi câu hỏi</button>
       </div>
 
       <div class="assembly-feedback" id="assembly-feedback"></div>
     `;
-  };
+  }
 
   window.selectPart = function(idx, text) {
     state.selectedParts.push(text);
@@ -486,6 +613,318 @@ document.addEventListener('DOMContentLoaded', () => {
       feedback.style.color = 'var(--accent-rose)';
       feedback.innerHTML = `❌ Chưa đúng! Bạn đã ghép: "${assembled}". Hãy thử lại!`;
     }
+  };
+
+  // --- QUIZ EXAM FEATURE (300 QUESTIONS, 30 RANDOM, 15 MIN, SHUFFLED OPTIONS) ---
+  function startNewQuizExam() {
+    if (typeof QUIZ_DATA === 'undefined' || !QUIZ_DATA || QUIZ_DATA.length === 0) {
+      alert('Không tìm thấy dữ liệu bộ đề trắc nghiệm.');
+      return;
+    }
+
+    // 1. Pick 30 random questions from 300
+    const shuffledPool = [...QUIZ_DATA].sort(() => Math.random() - 0.5);
+    const selected30 = shuffledPool.slice(0, 30);
+
+    // 2. Shuffle options for each question
+    state.quizQuestions = selected30.map((q, idx) => {
+      const optionsCopy = [...q.options];
+      const shuffledOpts = optionsCopy.sort(() => Math.random() - 0.5);
+      
+      return {
+        ...q,
+        quizIndex: idx + 1,
+        shuffledOptions: shuffledOpts
+      };
+    });
+
+    // 3. Reset quiz state
+    state.quizUserAnswers = {};
+    state.quizCurrentIndex = 0;
+    state.quizTimeLeft = 15 * 60; // 15 minutes
+    state.quizSubmitted = false;
+
+    // 4. Show exam screen
+    elements.quizStartScreen.style.display = 'none';
+    elements.quizResultScreen.style.display = 'none';
+    elements.quizExamScreen.style.display = 'block';
+
+    // 5. Start countdown timer
+    startQuizTimer();
+
+    // 6. Render current question
+    renderQuizQuestion();
+  }
+
+  function startQuizTimer() {
+    if (state.quizTimerInterval) clearInterval(state.quizTimerInterval);
+
+    state.quizTimerInterval = setInterval(() => {
+      state.quizTimeLeft--;
+
+      const timerEl = document.getElementById('quiz-timer-display');
+      if (timerEl) {
+        const mins = Math.floor(state.quizTimeLeft / 60);
+        const secs = state.quizTimeLeft % 60;
+        const formatted = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        timerEl.textContent = formatted;
+
+        if (state.quizTimeLeft <= 180) { // < 3 mins
+          timerEl.parentElement.classList.add('urgent');
+        } else {
+          timerEl.parentElement.classList.remove('urgent');
+        }
+      }
+
+      if (state.quizTimeLeft <= 0) {
+        clearInterval(state.quizTimerInterval);
+        alert('⏱️ Hết thời gian 15 phút! Hệ thống tự động nộp bài thi.');
+        submitQuizExam();
+      }
+    }, 1000);
+  }
+
+  function renderQuizQuestion() {
+    const q = state.quizQuestions[state.quizCurrentIndex];
+    if (!q) return;
+
+    const userSelectedKey = state.quizUserAnswers[state.quizCurrentIndex];
+    const isInstantMode = state.quizMode === 'instant_feedback';
+
+    const examContainer = document.getElementById('quiz-active-question-card');
+    
+    examContainer.innerHTML = `
+      <div class="quiz-top-bar">
+        <div>
+          <span><i class="fa-solid fa-list-check"></i> Câu ${state.quizCurrentIndex + 1} / 30</span>
+        </div>
+        <div class="quiz-timer">
+          <i class="fa-solid fa-clock"></i> <span id="quiz-timer-display">15:00</span>
+        </div>
+        <div class="quiz-badge">
+          ${isInstantMode ? '⚡ Biết kết quả ngay' : '🏁 Nộp bài mới biết điểm'}
+        </div>
+      </div>
+
+      <div class="quiz-q-text">
+        <strong>Câu ${state.quizCurrentIndex + 1}:</strong> ${escapeHtml(q.question)}
+      </div>
+
+      <div class="quiz-options">
+        ${q.shuffledOptions.map((opt, optIdx) => {
+          const keys = ['A', 'B', 'C', 'D'];
+          const optLabelKey = keys[optIdx];
+          const isSelected = userSelectedKey === opt.key;
+          
+          let btnClass = 'quiz-opt-btn';
+          if (isSelected) btnClass += ' selected';
+
+          if (isInstantMode && userSelectedKey) {
+            if (opt.key === q.correctKey) {
+              btnClass += ' correct';
+            } else if (isSelected && userSelectedKey !== q.correctKey) {
+              btnClass += ' wrong';
+            }
+          }
+
+          return `
+            <button class="${btnClass}" onclick="selectQuizAnswer(${state.quizCurrentIndex}, '${escapeJs(opt.key)}')">
+              <span class="quiz-opt-key">${optLabelKey}</span>
+              <span>${escapeHtml(opt.text)}</span>
+            </button>
+          `;
+        }).join('')}
+      </div>
+
+      ${isInstantMode && userSelectedKey ? `
+        <div class="quiz-explanation-box">
+          <strong style="color:var(--accent-emerald);">
+            ${userSelectedKey === q.correctKey ? '🎉 Đúng!' : '❌ Chưa đúng!'} Đáp án đúng là phương án chứa: "${escapeHtml(q.options.find(o=>o.key===q.correctKey).text)}"
+          </strong>
+          ${q.explanation ? `<p style="margin-top:6px; color:var(--text-secondary);">${escapeHtml(q.explanation)}</p>` : ''}
+        </div>
+      ` : ''}
+
+      <div class="quiz-nav-bar">
+        <button class="btn-secondary" onclick="prevQuizQuestion()" ${state.quizCurrentIndex === 0 ? 'disabled' : ''}>
+          <i class="fa-solid fa-chevron-left"></i> Câu trước
+        </button>
+
+        <button class="btn-primary" style="max-width:160px;" onclick="confirmSubmitQuiz()">
+          <i class="fa-solid fa-paper-plane"></i> Nộp Bài
+        </button>
+
+        <button class="btn-secondary" onclick="nextQuizQuestion()" ${state.quizCurrentIndex === 29 ? 'disabled' : ''}>
+          Câu sau <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="quiz-palette">
+        ${state.quizQuestions.map((item, idx) => {
+          const isAns = state.quizUserAnswers.hasOwnProperty(idx);
+          let pClass = 'quiz-num-btn';
+          if (idx === state.quizCurrentIndex) pClass += ' current';
+          if (isAns) pClass += ' answered';
+
+          if (isInstantMode && isAns) {
+            if (state.quizUserAnswers[idx] === item.correctKey) pClass += ' correct-num';
+            else pClass += ' wrong-num';
+          }
+
+          return `<button class="${pClass}" onclick="jumpQuizQuestion(${idx})">${idx + 1}</button>`;
+        }).join('')}
+      </div>
+    `;
+
+    // Update timer text immediately
+    const mins = Math.floor(state.quizTimeLeft / 60);
+    const secs = state.quizTimeLeft % 60;
+    const timerDisplay = document.getElementById('quiz-timer-display');
+    if (timerDisplay) {
+      timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+  }
+
+  window.selectQuizAnswer = function(qIndex, key) {
+    if (state.quizSubmitted) return;
+    state.quizUserAnswers[qIndex] = key;
+    renderQuizQuestion();
+  };
+
+  window.prevQuizQuestion = function() {
+    if (state.quizCurrentIndex > 0) {
+      state.quizCurrentIndex--;
+      renderQuizQuestion();
+    }
+  };
+
+  window.nextQuizQuestion = function() {
+    if (state.quizCurrentIndex < 29) {
+      state.quizCurrentIndex++;
+      renderQuizQuestion();
+    }
+  };
+
+  window.jumpQuizQuestion = function(idx) {
+    state.quizCurrentIndex = idx;
+    renderQuizQuestion();
+  };
+
+  window.confirmSubmitQuiz = function() {
+    const answeredCount = Object.keys(state.quizUserAnswers).length;
+    const unanswered = 30 - answeredCount;
+
+    let msg = `Bạn đã làm ${answeredCount}/30 câu.`;
+    if (unanswered > 0) {
+      msg += ` Còn ${unanswered} câu chưa trả lời.`;
+    }
+    msg += '
+Bạn có chắc chắn muốn nộp bài thi?';
+
+    if (confirm(msg)) {
+      submitQuizExam();
+    }
+  };
+
+  function submitQuizExam() {
+    state.quizSubmitted = true;
+    if (state.quizTimerInterval) clearInterval(state.quizTimerInterval);
+
+    // Calculate score
+    let correctCount = 0;
+    state.quizQuestions.forEach((q, idx) => {
+      if (state.quizUserAnswers[idx] === q.correctKey) {
+        correctCount++;
+      }
+    });
+
+    const percent = ((correctCount / 30) * 100).toFixed(1);
+    const timeSpentSecs = (15 * 60) - state.quizTimeLeft;
+    const mins = Math.floor(timeSpentSecs / 60);
+    const secs = timeSpentSecs % 60;
+    const timeFormatted = `${mins} phút ${secs} giây`;
+
+    // Show result screen
+    elements.quizExamScreen.style.display = 'none';
+    elements.quizResultScreen.style.display = 'block';
+
+    let badgeText = '🎉 Mức độ: Xuất sắc!';
+    if (percent < 50) badgeText = '💪 Mức độ: Cần cố gắng thêm!';
+    else if (percent < 80) badgeText = '👍 Mức độ: Đạt Khá!';
+
+    elements.quizResultScreen.innerHTML = `
+      <div class="quiz-card">
+        <div class="quiz-header">
+          <h2><i class="fa-solid fa-square-poll-vertical"></i> Kết Quả Bài Thi Trắc Nghiệm</h2>
+          <p>Dưới đây là điểm số và chi tiết đáp án câu đúng/câu sai của bạn.</p>
+        </div>
+
+        <div class="quiz-result-score">
+          <div class="score-circle">
+            <span class="big-val">${correctCount}/30</span>
+            <span class="percent">${percent}%</span>
+          </div>
+          <h3 style="font-size:1.3rem; margin-bottom:0.4rem;">${badgeText}</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">Thời gian làm bài: <strong>${timeFormatted}</strong></p>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:12px; margin:1.5rem 0 2rem 0; flex-wrap:wrap;">
+          <button class="btn-primary" style="max-width:260px;" onclick="startNewQuizExam()">
+            <i class="fa-solid fa-rotate-right"></i> Làm bài thi mới (30 câu ngẫu nhiên)
+          </button>
+          <button class="btn-secondary" style="max-width:200px;" onclick="resetQuizToStart()">
+            <i class="fa-solid fa-house"></i> Về màn hình chính
+          </button>
+        </div>
+
+        <div style="border-top:1px solid var(--border-color); padding-top:1.5rem;">
+          <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:1rem;">
+            <i class="fa-solid fa-list-check"></i> Chi Tiết 30 Câu Hỏi Bài Thi:
+          </h3>
+
+          ${state.quizQuestions.map((q, idx) => {
+            const uAnsKey = state.quizUserAnswers[idx];
+            const isCorrect = uAnsKey === q.correctKey;
+            const correctOptObj = q.options.find(o => o.key === q.correctKey);
+            const userOptObj = q.options.find(o => o.key === uAnsKey);
+
+            return `
+              <div class="quiz-review-item ${isCorrect ? 'is-correct' : 'is-wrong'}">
+                <div style="font-weight:700; font-size:1rem; margin-bottom:0.5rem; color:#fff;">
+                  Câu ${idx + 1}: ${escapeHtml(q.question)}
+                </div>
+
+                <div style="font-size:0.9rem; margin-bottom:0.3rem;">
+                  Lựa chọn của bạn: 
+                  <strong style="color:${isCorrect ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">
+                    ${userOptObj ? escapeHtml(userOptObj.text) : '(Bỏ trống)'}
+                  </strong>
+                </div>
+
+                ${!isCorrect ? `
+                  <div style="font-size:0.9rem; color:var(--accent-emerald); margin-bottom:0.3rem;">
+                    Đáp án đúng: <strong>${escapeHtml(correctOptObj ? correctOptObj.text : '')}</strong>
+                  </div>
+                ` : ''}
+
+                ${q.explanation ? `
+                  <div style="font-size:0.83rem; color:var(--text-secondary); margin-top:0.4rem; background:rgba(0,0,0,0.2); padding:0.5rem 0.8rem; border-radius:var(--radius-sm);">
+                    <i class="fa-solid fa-lightbulb"></i> Giải thích: ${escapeHtml(q.explanation)}
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  window.resetQuizToStart = function() {
+    if (state.quizTimerInterval) clearInterval(state.quizTimerInterval);
+    elements.quizExamScreen.style.display = 'none';
+    elements.quizResultScreen.style.display = 'none';
+    elements.quizStartScreen.style.display = 'block';
   };
 
   // --- AI DICTIONARY ---
@@ -570,7 +1009,8 @@ Good luck with your medical studies! Feel free to ask if you need further clarif
       .replace(/4\. Word Analysis & Related Medical Roots \(Phân tích từ vựng & Căn tố y khoa\)/g, '</div></div><div class="ai-section"><div class="ai-section-title"><i class="fa-solid fa-dna"></i> 4. Word Analysis & Related Medical Roots (Phân tích từ vựng & Căn tố y khoa)</div><div class="ai-section-content">')
       .replace(/Good luck with your medical studies!/g, '</div></div><div class="ai-footer-note">Good luck with your medical studies!')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>');
+      .replace(/
+/g, '<br>');
   }
 
   function renderAiCardFormat(q, localMatch, isError = false, errMsg = '') {
@@ -658,7 +1098,7 @@ Good luck with your medical studies! Feel free to ask if you need further clarif
 
   function escapeJs(s) {
     if (!s) return '';
-    return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+    return s.replace(/\/g, '\\').replace(/'/g, "\'").replace(/"/g, '\"');
   }
 
   init();
