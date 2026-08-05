@@ -1,4 +1,5 @@
-window.MEDICAL_DATA = {
+// MedTerm AI Pro - Dataset (1,589 Terms & 300 Quiz Questions)
+var MEDICAL_DATA = {
   "modules": [
     [
       "cau_tao",
@@ -14382,7 +14383,7 @@ window.MEDICAL_DATA = {
   ]
 };
 
-window.QUIZ_DATA = [
+var QUIZ_DATA = [
   {
     "id": "q_1_1",
     "num": 1,
