@@ -239,211 +239,211 @@ window.startRootMatchGame = function() {
       term: "HYPERTHYROIDISM",
       vietnamese: "Bệnh cường giáp (Tăng hoạt động tuyến giáp)",
       parts: [
-        { type: "prefix", text: "hyper-", hint: "Tiền tố: Tăng / Cường" },
+        { type: "prefix", text: "hyper", hint: "Tiền tố: Tăng / Cường" },
         { type: "root", text: "thyroid", hint: "Gốc từ: Tuyến giáp" },
-        { type: "suffix", text: "-ism", hint: "Hậu tố: Bệnh lý / Tình trạng" }
+        { type: "suffix", text: "ism", hint: "Hậu tố: Bệnh lý / Tình trạng" }
       ]
     },
     {
       term: "GASTROENTERITIS",
       vietnamese: "Viêm dạ dày ruột",
       parts: [
-        { type: "root", text: "gastro-", hint: "Dạng kết hợp: Dạ dày" },
-        { type: "root", text: "enter-", hint: "Gốc từ: Ruột" },
-        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+        { type: "root", text: "gastro", hint: "Dạng kết hợp: Dạ dày" },
+        { type: "root", text: "enter", hint: "Gốc từ: Ruột" },
+        { type: "suffix", text: "itis", hint: "Hậu tố: Viêm" }
       ]
     },
     {
       term: "ELECTROCARDIOGRAM",
       vietnamese: "Điện tâm đồ (Bản ghi hoạt động điện tim)",
       parts: [
-        { type: "prefix", text: "electro-", hint: "Tiền tố: Điện" },
-        { type: "root", text: "cardio-", hint: "Dạng kết hợp: Tim" },
-        { type: "suffix", text: "-gram", hint: "Hậu tố: Bản ghi" }
+        { type: "prefix", text: "electro", hint: "Tiền tố: Điện" },
+        { type: "root", text: "cardio", hint: "Dạng kết hợp: Tim" },
+        { type: "suffix", text: "gram", hint: "Hậu tố: Bản ghi" }
       ]
     },
     {
       term: "HYPOGLYCEMIA",
       vietnamese: "Hạ đường huyết",
       parts: [
-        { type: "prefix", text: "hypo-", hint: "Tiền tố: Hạ / Giảm" },
-        { type: "root", text: "glyc-", hint: "Gốc từ: Đường" },
-        { type: "suffix", text: "-emia", hint: "Hậu tố: Tình trạng máu" }
+        { type: "prefix", text: "hypo", hint: "Tiền tố: Hạ / Giảm" },
+        { type: "root", text: "glyc", hint: "Gốc từ: Đường" },
+        { type: "suffix", text: "emia", hint: "Hậu tố: Tình trạng máu" }
       ]
     },
     {
       term: "COLPOSCOPY",
       vietnamese: "Soi cổ tử cung âm đạo",
       parts: [
-        { type: "root", text: "colpo-", hint: "Dạng kết hợp: Âm đạo" },
-        { type: "suffix", text: "-scopy", hint: "Hậu tố: Nội soi" }
+        { type: "root", text: "colpo", hint: "Dạng kết hợp: Âm đạo" },
+        { type: "suffix", text: "scopy", hint: "Hậu tố: Nội soi" }
       ]
     },
     {
       term: "HEPATOMEGALY",
       vietnamese: "Chứng gan to",
       parts: [
-        { type: "root", text: "hepato-", hint: "Dạng kết hợp: Gan" },
-        { type: "suffix", text: "-megaly", hint: "Hậu tố: Phì đại / To" }
+        { type: "root", text: "hepato", hint: "Dạng kết hợp: Gan" },
+        { type: "suffix", text: "megaly", hint: "Hậu tố: Phì đại / To" }
       ]
     },
     {
       term: "NEPHROLITHIASIS",
       vietnamese: "Bệnh sỏi thận",
       parts: [
-        { type: "root", text: "nephro-", hint: "Dạng kết hợp: Thận" },
-        { type: "root", text: "lith-", hint: "Gốc từ: Sỏi" },
-        { type: "suffix", text: "-iasis", hint: "Hậu tố: Tình trạng bệnh" }
+        { type: "root", text: "nephro", hint: "Dạng kết hợp: Thận" },
+        { type: "root", text: "lith", hint: "Gốc từ: Sỏi" },
+        { type: "suffix", text: "iasis", hint: "Hậu tố: Tình trạng bệnh" }
       ]
     },
     {
       term: "BRONCHOSPASM",
       vietnamese: "Co thắt phế quản",
       parts: [
-        { type: "root", text: "broncho-", hint: "Dạng kết hợp: Phế quản" },
-        { type: "suffix", text: "-spasm", hint: "Hậu tố: Co thắt" }
+        { type: "root", text: "broncho", hint: "Dạng kết hợp: Phế quản" },
+        { type: "suffix", text: "spasm", hint: "Hậu tố: Co thắt" }
       ]
     },
     {
       term: "OSTEOARTHRITIS",
       vietnamese: "Viêm xương khớp",
       parts: [
-        { type: "root", text: "osteo-", hint: "Dạng kết hợp: Xương" },
-        { type: "root", text: "arthr-", hint: "Gốc từ: Khớp" },
-        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+        { type: "root", text: "osteo", hint: "Dạng kết hợp: Xương" },
+        { type: "root", text: "arthr", hint: "Gốc từ: Khớp" },
+        { type: "suffix", text: "itis", hint: "Hậu tố: Viêm" }
       ]
     },
     {
       term: "PERICARDITIS",
       vietnamese: "Viêm màng ngoài tim",
       parts: [
-        { type: "prefix", text: "peri-", hint: "Tiền tố: Xung quanh" },
-        { type: "root", text: "card-", hint: "Gốc từ: Tim" },
-        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+        { type: "prefix", text: "peri", hint: "Tiền tố: Xung quanh" },
+        { type: "root", text: "card", hint: "Gốc từ: Tim" },
+        { type: "suffix", text: "itis", hint: "Hậu tố: Viêm" }
       ]
     },
     {
       term: "THROMBOCYTOPENIA",
       vietnamese: "Chứng giảm tiểu cầu",
       parts: [
-        { type: "root", text: "thrombo-", hint: "Dạng kết hợp: Huyết khối" },
-        { type: "root", text: "cyto-", hint: "Dạng kết hợp: Tế bào" },
-        { type: "suffix", text: "-penia", hint: "Hậu tố: Giảm / Thiếu hụt" }
+        { type: "root", text: "thrombo", hint: "Dạng kết hợp: Huyết khối" },
+        { type: "root", text: "cyto", hint: "Dạng kết hợp: Tế bào" },
+        { type: "suffix", text: "penia", hint: "Hậu tố: Giảm / Thiếu hụt" }
       ]
     },
     {
       term: "ENDOMETRIOSIS",
       vietnamese: "Lạc nội mạc tử cung",
       parts: [
-        { type: "prefix", text: "endo-", hint: "Tiền tố: Bên trong" },
-        { type: "root", text: "metri-", hint: "Gốc từ: Tử cung" },
-        { type: "suffix", text: "-osis", hint: "Hậu tố: Tình trạng bệnh lý" }
+        { type: "prefix", text: "endo", hint: "Tiền tố: Bên trong" },
+        { type: "root", text: "metri", hint: "Gốc từ: Tử cung" },
+        { type: "suffix", text: "osis", hint: "Hậu tố: Tình trạng bệnh lý" }
       ]
     },
     {
       term: "NEUROPATHY",
       vietnamese: "Bệnh lý thần kinh",
       parts: [
-        { type: "root", text: "neuro-", hint: "Dạng kết hợp: Thần kinh" },
-        { type: "suffix", text: "-pathy", hint: "Hậu tố: Bệnh lý" }
+        { type: "root", text: "neuro", hint: "Dạng kết hợp: Thần kinh" },
+        { type: "suffix", text: "pathy", hint: "Hậu tố: Bệnh lý" }
       ]
     },
     {
       term: "PNEUMOTHORAX",
       vietnamese: "Tràn khí màng phổi",
       parts: [
-        { type: "root", text: "pneumo-", hint: "Dạng kết hợp: Khí / Phổi" },
-        { type: "suffix", text: "-thorax", hint: "Hậu tố: Lồng ngực" }
+        { type: "root", text: "pneumo", hint: "Dạng kết hợp: Khí / Phổi" },
+        { type: "suffix", text: "thorax", hint: "Hậu tố: Lồng ngực" }
       ]
     },
     {
       term: "CHOLECYSTITIS",
       vietnamese: "Viêm túi mật",
       parts: [
-        { type: "root", text: "cholecyst-", hint: "Gốc từ: Túi mật" },
-        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+        { type: "root", text: "cholecyst", hint: "Gốc từ: Túi mật" },
+        { type: "suffix", text: "itis", hint: "Hậu tố: Viêm" }
       ]
     },
     {
       term: "GASTROSTOMY",
       vietnamese: "Phẫu thuật mở thông dạ dày",
       parts: [
-        { type: "root", text: "gastro-", hint: "Dạng kết hợp: Dạ dày" },
-        { type: "suffix", text: "-stomy", hint: "Hậu tố: Mở thông" }
+        { type: "root", text: "gastro", hint: "Dạng kết hợp: Dạ dày" },
+        { type: "suffix", text: "stomy", hint: "Hậu tố: Mở thông" }
       ]
     },
     {
       term: "HYPERGLYCEMIA",
       vietnamese: "Tăng đường huyết",
       parts: [
-        { type: "prefix", text: "hyper-", hint: "Tiền tố: Tăng / Cường" },
-        { type: "root", text: "glyc-", hint: "Gốc từ: Đường" },
-        { type: "suffix", text: "-emia", hint: "Hậu tố: Tình trạng máu" }
+        { type: "prefix", text: "hyper", hint: "Tiền tố: Tăng / Cường" },
+        { type: "root", text: "glyc", hint: "Gốc từ: Đường" },
+        { type: "suffix", text: "emia", hint: "Hậu tố: Tình trạng máu" }
       ]
     },
     {
       term: "ELECTROENCEPHALOGRAM",
       vietnamese: "Điện não đồ (Bản ghi hoạt động điện não)",
       parts: [
-        { type: "prefix", text: "electro-", hint: "Tiền tố: Điện" },
-        { type: "root", text: "encephalo-", hint: "Dạng kết hợp: Não" },
-        { type: "suffix", text: "-gram", hint: "Hậu tố: Bản ghi" }
+        { type: "prefix", text: "electro", hint: "Tiền tố: Điện" },
+        { type: "root", text: "encephalo", hint: "Dạng kết hợp: Não" },
+        { type: "suffix", text: "gram", hint: "Hậu tố: Bản ghi" }
       ]
     },
     {
       term: "ARTERIOSCLEROSIS",
       vietnamese: "Chứng xơ cứng động mạch",
       parts: [
-        { type: "root", text: "arterio-", hint: "Dạng kết hợp: Động mạch" },
-        { type: "suffix", text: "-sclerosis", hint: "Hậu tố: Xơ cứng" }
+        { type: "root", text: "arterio", hint: "Dạng kết hợp: Động mạch" },
+        { type: "suffix", text: "sclerosis", hint: "Hậu tố: Xơ cứng" }
       ]
     },
     {
       term: "HYSTERECTOMY",
       vietnamese: "Phẫu thuật cắt tử cung",
       parts: [
-        { type: "root", text: "hyster-", hint: "Gốc từ: Tử cung" },
-        { type: "suffix", text: "-ectomy", hint: "Hậu tố: Phẫu thuật cắt bỏ" }
+        { type: "root", text: "hyster", hint: "Gốc từ: Tử cung" },
+        { type: "suffix", text: "ectomy", hint: "Hậu tố: Phẫu thuật cắt bỏ" }
       ]
     },
     {
       term: "DERMATOSCLEROSIS",
       vietnamese: "Chứng xơ cứng bì (da)",
       parts: [
-        { type: "root", text: "dermato-", hint: "Dạng kết hợp: Da" },
-        { type: "suffix", text: "-sclerosis", hint: "Hậu tố: Xơ cứng" }
+        { type: "root", text: "dermato", hint: "Dạng kết hợp: Da" },
+        { type: "suffix", text: "sclerosis", hint: "Hậu tố: Xơ cứng" }
       ]
     },
     {
       term: "TRACHEOSTOMY",
       vietnamese: "Phẫu thuật mở thông khí quản",
       parts: [
-        { type: "root", text: "tracheo-", hint: "Dạng kết hợp: Khí quản" },
-        { type: "suffix", text: "-stomy", hint: "Hậu tố: Mở thông" }
+        { type: "root", text: "tracheo", hint: "Dạng kết hợp: Khí quản" },
+        { type: "suffix", text: "stomy", hint: "Hậu tố: Mở thông" }
       ]
     },
     {
       term: "HEPATITIS",
       vietnamese: "Viêm gan",
       parts: [
-        { type: "root", text: "hepat-", hint: "Gốc từ: Gan" },
-        { type: "suffix", text: "-itis", hint: "Hậu tố: Viêm" }
+        { type: "root", text: "hepat", hint: "Gốc từ: Gan" },
+        { type: "suffix", text: "itis", hint: "Hậu tố: Viêm" }
       ]
     },
     {
       term: "ARTHROCENTESIS",
       vietnamese: "Chọc dò khớp hút dịch",
       parts: [
-        { type: "root", text: "arthro-", hint: "Dạng kết hợp: Khớp" },
-        { type: "suffix", text: "-centesis", hint: "Hậu tố: Chọc dò rút dịch" }
+        { type: "root", text: "arthro", hint: "Dạng kết hợp: Khớp" },
+        { type: "suffix", text: "centesis", hint: "Hậu tố: Chọc dò rút dịch" }
       ]
     },
     {
       term: "SPLENOMEGALY",
       vietnamese: "Chứng lách to",
       parts: [
-        { type: "root", text: "spleno-", hint: "Dạng kết hợp: Lách" },
-        { type: "suffix", text: "-megaly", hint: "Hậu tố: Phì đại / To" }
+        { type: "root", text: "spleno", hint: "Dạng kết hợp: Lách" },
+        { type: "suffix", text: "megaly", hint: "Hậu tố: Phì đại / To" }
       ]
     }
   ];
