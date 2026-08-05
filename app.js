@@ -224,16 +224,11 @@ window.toggleGameHints = function() {
   localStorage.setItem('medterm_game_hints', state.showGameHints ? 'true' : 'false');
   window.updateHintToggleButton();
   
-  // Directly update hint visibility on all existing pool buttons without resetting selected state
+  // Directly toggle display of all hint elements instantly
   const hintEls = document.querySelectorAll('.game-part-hint');
   hintEls.forEach(el => {
-    el.style.display = state.showGameHints ? 'inline' : 'none';
+    el.style.display = state.showGameHints ? 'inline-block' : 'none';
   });
-  
-  // Re-render stage if needed
-  if (state.currentMatchTarget) {
-    window.renderGameStage();
-  }
 };
 
 window.startRootMatchGame = function() {
@@ -454,6 +449,7 @@ window.startRootMatchGame = function() {
   ];
 
   const target = structuredPool[Math.floor(Math.random() * structuredPool.length)];
+  target.shuffledParts = [...target.parts].sort(() => Math.random() - 0.5);
   state.currentMatchTarget = target;
 
   window.renderGameStage();
@@ -465,7 +461,7 @@ window.renderGameStage = function() {
   const target = state.currentMatchTarget;
   if (!target) return;
 
-  const shuffledParts = [...target.parts].sort(() => Math.random() - 0.5);
+  const partsToRender = target.shuffledParts || target.parts;
 
   stage.innerHTML = `
     <div class="target-definition-box">
@@ -482,10 +478,10 @@ window.renderGameStage = function() {
     </div>
 
     <div class="assembly-pool" id="assembly-pool">
-      ${shuffledParts.map((p, idx) => `
+      ${partsToRender.map((p, idx) => `
         <button class="part-card ${p.type}" id="pool-part-${idx}" onclick="window.selectPart(${idx}, '${escapeJs(p.text)}')">
           <span>${escapeHtml(p.text)}</span>
-          ${state.showGameHints && p.hint ? `<small class="game-part-hint" style="font-size:0.75rem; opacity:0.85; margin-left:4px;">(${escapeHtml(p.hint)})</small>` : ''}
+          <small class="game-part-hint" style="font-size:0.75rem; opacity:0.85; margin-left:4px; display:${state.showGameHints ? 'inline-block' : 'none'};">(${escapeHtml(p.hint)})</small>
         </button>
       `).join('')}
     </div>

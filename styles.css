@@ -1371,3 +1371,32 @@ footer {
   .quiz-palette { grid-template-columns: repeat(5, 1fr); }
   .srs-controls { grid-template-columns: repeat(2, 1fr); }
 }
+
+.author-credit {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+.author-link {
+  color: var(--accent-cyan);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.author-link:hover {
+  text-decoration: underline;
+}
+
+.hero-author-link {
+  color: var(--accent-emerald);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-author-link:hover {
+  text-decoration: underline;
+}
