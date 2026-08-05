@@ -1,4 +1,4 @@
-const MEDICAL_DATA = {
+window.MEDICAL_DATA = {
   "modules": [
     [
       "cau_tao",
@@ -14382,7 +14382,7 @@ const MEDICAL_DATA = {
   ]
 };
 
-const QUIZ_DATA = [
+window.QUIZ_DATA = [
   {
     "id": "q_1_1",
     "num": 1,

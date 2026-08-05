@@ -1374,7 +1374,7 @@ footer {
   .srs-controls { grid-template-columns: repeat(2, 1fr); }
 }
 
-</style>
+  </style>
 </head>
 <body>
 
@@ -1509,19 +1509,19 @@ footer {
         </div>
 
         <div class="srs-controls">
-          <button class="rate-btn rate-again" id="rate-again" onclick="rateCard(1)">
+          <button class="rate-btn rate-again" id="rate-again" onclick="window.rateCard(1)">
             <span class="label">🔴 Quên (Again)</span>
             <span class="sub">&lt; 1 phút</span>
           </button>
-          <button class="rate-btn rate-hard" id="rate-hard" onclick="rateCard(2)">
+          <button class="rate-btn rate-hard" id="rate-hard" onclick="window.rateCard(2)">
             <span class="label">🟠 Khó (Hard)</span>
             <span class="sub">1 ngày</span>
           </button>
-          <button class="rate-btn rate-good" id="rate-good" onclick="rateCard(3)">
+          <button class="rate-btn rate-good" id="rate-good" onclick="window.rateCard(3)">
             <span class="label">🔵 Tốt (Good)</span>
             <span class="sub">3 ngày</span>
           </button>
-          <button class="rate-btn rate-easy" id="rate-easy" onclick="rateCard(4)">
+          <button class="rate-btn rate-easy" id="rate-easy" onclick="window.rateCard(4)">
             <span class="label">🟢 Dễ (Easy)</span>
             <span class="sub">6 ngày</span>
           </button>
@@ -1545,7 +1545,7 @@ footer {
             <i class="fa-solid fa-eye"></i> Bản dịch: <strong>Bật</strong>
           </button>
 
-          <button class="btn-refresh-game" onclick="startRootMatchGame()"><i class="fa-solid fa-rotate-right"></i> Đổi câu hỏi</button>
+          <button class="btn-refresh-game" onclick="window.startRootMatchGame()"><i class="fa-solid fa-rotate-right"></i> Đổi câu hỏi</button>
         </div>
 
         <div class="assembly-stage-card" id="assembly-stage">
@@ -1726,9 +1726,9 @@ footer {
     </div>
   </div>
 
-  
+  <!-- Embedded Data & Application JS -->
   <script>
-const MEDICAL_DATA = {
+window.MEDICAL_DATA = {
   "modules": [
     [
       "cau_tao",
@@ -16112,7 +16112,7 @@ const MEDICAL_DATA = {
   ]
 };
 
-const QUIZ_DATA = [
+window.QUIZ_DATA = [
   {
     "id": "q_1_1",
     "num": 1,
@@ -24777,6 +24777,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.startRootMatchGame();
 });
 
-</script>
+  </script>
 </body>
 </html>
